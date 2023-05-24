@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Intranet Website</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body> 
+    <form action="/login" method="post">
+      <label for="email">Email:</label><br>
+      <input type="text" id="email" name="email"><br>
+      <label for="password">Password:</label><br>
+      <input type="password" id="password" name="password">
+      <button type="Submit">Submit</button>
+    </form>
+    {% if failed_login %}
+      <p>Invalid email and/or password.</p>
+    {% endif %}
+  </body>
+</html>

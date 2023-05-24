@@ -8,6 +8,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #fff;
+  background-color: #000;
 }
 
 .container {
@@ -19,7 +21,7 @@ body {
   min-width: 600px;
   padding: 20px;
 
-  border: 10px solid #000;
+  border: 10px solid #fff;
   border-radius: 20px;
   margin-left:-1px;
 
@@ -43,6 +45,7 @@ body {
   transform-origin: right;  /* Stick the buttons to the right when scaling on hover */
 
   border-radius: 20px 0 0 20px; /* Left side rounded, right sine rectangular */
+  border: 10px solid #fff;
 
   color: #fff;
   background-color: #000; 
