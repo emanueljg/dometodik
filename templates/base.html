@@ -10,29 +10,16 @@
 
       <div id="contentButtons" class="content-buttons">
         <!-- Generate content buttons -->
-        {% for CONTENT in CONTENTS %}
-          {% if CONTENT == 'login' %}
-            {% if current_user.is_authenticated %}
-              <a href="/logout" class="contentButton" id="logoutButton">Logout</a>
-            {% else %}
-              <a href="/login" class="tag" id="loginButton" onclick="showContent('loginButton', 'login')">Login</a>
-            {% endif %}
-          {% else %}
-            <a href="/{{CONTENT}}" class="tag" id="{{CONTENT}}Button">{{CONTENT}}</a>
-          {% endif %}
+        {% for CONTENT in Content.contextual_contents().values() %}
+          <a href="/{{CONTENT.name}}" class="{{CONTENT.css_classify_button(content)}}" id="{{CONTENT.name}}Button">{{CONTENT.capitalized}}</a>
         {% endfor %}
       </div>
 
       <!-- Generate contents -->
-      {% for CONTENT in CONTENTS %}
-        <div id="{{CONTENT}}" class="content">
-          {% include {{CONTENT}} + '.html' %}
+      {% for CONTENT in Content.NORMALS().values() %}
+        <div id="{{CONTENT.name}}" class="{{CONTENT.css_classify_content(content)}}">
+          {% include CONTENT.html %}
         </div>
       {% endfor %}
-
-      <!-- Set what content is displayed -->
-      <script>
-        
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
   </body>
 </html>

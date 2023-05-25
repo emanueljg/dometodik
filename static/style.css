@@ -37,7 +37,7 @@ body {
   
 }
 
-.content-buttons .tag {
+.content-buttons .contentButton {
   margin-bottom: 10px;
   padding: 10px 20px;
 
@@ -55,8 +55,17 @@ body {
   overflow-wrap: break-word;
 }
 
+.contentButton.selected {
+  color: #000;
+  background-color: #fff;
+}
+
+.content.selected {
+  display: inherit;
+}
+
 /* Hover animation */
-.content-buttons .tag:hover {
+.content-buttons .contentButton:hover {
   transform: scaleX(1.1);
 }
 

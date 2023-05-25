@@ -1,10 +1,3 @@
-<!doctype html>
-<html>
-  <head>
-    <title>Intranet Website</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  </head>
-  <body> 
     <form action="/login" method="post">
       <label for="email">Email:</label><br>
       <input type="text" id="email" name="email"><br>
@@ -15,5 +8,3 @@
     {% if failed_login %}
       <p>Invalid email and/or password.</p>
     {% endif %}
-  </body>
-</html>
