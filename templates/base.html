@@ -11,13 +11,13 @@
       <div id="contentButtons" class="content-buttons">
         <!-- Generate content buttons -->
         {% for CONTENT in Content.contextual_contents().values() %}
-          <a href="/{{CONTENT.name}}" class="{{CONTENT.css_classify_button(content)}}" id="{{CONTENT.name}}Button">{{CONTENT.capitalized}}</a>
+          <a href="/{{CONTENT.name}}" class="{{CONTENT.css_classify_button(selected_content)}}" id="{{CONTENT.name}}Button">{{CONTENT.capitalized}}</a>
         {% endfor %}
       </div>
 
       <!-- Generate contents -->
-      {% for CONTENT in Content.NORMALS().values() %}
-        <div id="{{CONTENT.name}}" class="{{CONTENT.css_classify_content(content)}}">
+      {% for CONTENT in Content.HAS_TEXT().values() %}
+        <div id="{{CONTENT.name}}" class="{{CONTENT.css_classify_content(selected_content)}}">
           {% include CONTENT.html %}
         </div>
       {% endfor %}
