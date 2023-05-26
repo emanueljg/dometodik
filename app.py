@@ -1,3 +1,5 @@
+"""A module containing flask app init and routes."""
+
 from flask import Flask, redirect, url_for, render_template, request
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from dataclasses import dataclass
