@@ -41,9 +41,30 @@ def elems_with_attrs(iterable: Iterable|Mapping, **attrs) \
     else: __obj_has_attrs = _obj_has_attrs
     return (o for o in iterable if __obj_has_attrs(o, **attrs))
 
-def base_render(content: str = 'home', failed_login: bool = False):
+def base_render(route: str = 'home', failed_login: bool = False) -> str:
+    """Render base HTML with custom Jinja variables
+
+    This facilitates things like displaying the selected content based
+    on the content route and peripheral things like styling the selected
+    content button.
+
+    The flow for, say, the Home content can be roughly written as:
+        1. Navigate to /home
+        2. This function gets called with the route '/home'
+        3. Resolve this route to a Content object
+            * i.e. `Content.ALL['home']` => Content('home', has_text=true, ...)
+        4. Send the content object as well as some other info as Jinja variables
+        5. Through templating magic create the site HTML and CSS based on said object
+            * Set the "Home" button as active
+            * Set the home.html as displayed
+        
+    :param route: The currently selected route, evaluates to `Content`
+    :param failed_login: Whether the last login attempt failed or not
+
+    :return: The rendered HTML
+    """
     return render_template('base.html', 
-                           selected_content=Content.ALL[content],
+                           selected_content=Content.ALL[route],
                            Content=Content,
                            failed_login=failed_login)
 

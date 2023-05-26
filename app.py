@@ -23,7 +23,7 @@ def login():
         login_user(User.USERS[found_user.id])
         return redirect('/')
     else:
-        return base_render(content='login', failed_login=True) 
+        return base_render(route='login', failed_login=True) 
         
 
 @app.route('/logout', methods=(['GET']))
@@ -34,7 +34,7 @@ def logout():
 
 @app.route(f'/<any({", ".join(Content.HAS_TEXT())}):content>')
 def content_route(content):
-    return base_render(content=content)
+    return base_render(route=content)
 
 @app.route('/')
 def base():
