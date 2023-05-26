@@ -39,8 +39,7 @@ def elems_with_attrs(iterable: Iterable|Mapping, **attrs) \
         def __obj_has_attrs(o, **attrs):
             return _obj_has_attrs(o[1], **attrs)
     else: __obj_has_attrs = _obj_has_attrs
-    tmp = (o for o in iterable if __obj_has_attrs(o, **attrs))
-    return tmp
+    return (o for o in iterable if __obj_has_attrs(o, **attrs))
 
 def base_render(content: str = 'home', failed_login: bool = False):
     return render_template('base.html', 
