@@ -10,5 +10,6 @@ flask run &
 pytest
 
 # kills most recent background job (flask server)
+jobs
 kill %%  
 
