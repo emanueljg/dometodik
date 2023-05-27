@@ -32,5 +32,8 @@ jobs:
       run: |
         playwright install
     - name: run tests
+      # for some insane reason github actions introduces a race condition (!?)
+      # which in the script which tries to kill before the flask server has started,
+      # so we use bash here instead.
       run: |
-        ./do_test.sh
+        bash do_test.sh
