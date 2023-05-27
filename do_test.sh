@@ -9,5 +9,4 @@ flask run &
 # run tests
 pytest
 
-disown
-
+kill %-
