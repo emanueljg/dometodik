@@ -24,6 +24,6 @@ pip install -r requirements.txt
 
 ## usage
 ```sh
-### open the website on 127.0.0.1:5000
+# open the website on 127.0.0.1:5000
 flask run
 ```
