@@ -14,6 +14,14 @@ python -m venv .venv
 
 # install requirements (flask among others)
 pip install -r requirements.txt
+
+# To be able to run pytest's browser tests, you need to init Playwright
+playwright install
+```
+
+## test
+```sh
+./do_test.sh
 ```
 
 ## quick and dirty setup (not recommended)
