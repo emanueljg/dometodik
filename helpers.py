@@ -3,12 +3,14 @@
 __all__ = ['elems_with_attrs', 'base_render']
 
 from flask import render_template
-from collections.abc import Iterable, Iterator, Mapping
+from collections.abc import Iterable, Iterator, Mapping, Hashable
+from typing import Any
 
-from .content import Content
+
+from . import content
 
 
-def _obj_has_attrs(o, **attrs) -> bool:
+def _obj_has_attrs(o: Any, **attrs: Any) -> bool:
     """Check if an object has the specified attributes
 
     :param o: The object to check
@@ -18,8 +20,9 @@ def _obj_has_attrs(o, **attrs) -> bool:
     """
     return all(getattr(o, k) == v for k, v in attrs.items())
 
-def elems_with_attrs(iterable: Iterable|Mapping, **attrs) \
-    -> Iterator|Iterator[tuple]:
+def elems_with_attrs(iterable: Iterable[Any]|Mapping[Hashable, Any],
+                     **attrs: Any) \
+                    -> Iterator[Any]|Iterator[tuple[Hashable, Any]]:
     """Get elements of an `Iterable` with the specified attributes
 
     The return type differs based on the type of the collection:
@@ -36,10 +39,12 @@ def elems_with_attrs(iterable: Iterable|Mapping, **attrs) \
     """
     if isinstance(iterable, Mapping):
         iterable = iterable.items()
-        def __obj_has_attrs(o, **attrs):
+        def __obj_has_attrs(o: Any, **attrs: Any) -> bool:
             return _obj_has_attrs(o[1], **attrs)
     else: __obj_has_attrs = _obj_has_attrs
     return (o for o in iterable if __obj_has_attrs(o, **attrs))
+
+
 
 def base_render(route: str = 'home', failed_login: bool = False) -> str:
     """Render base HTML with custom Jinja variables
@@ -64,7 +69,7 @@ def base_render(route: str = 'home', failed_login: bool = False) -> str:
     :return: The rendered HTML
     """
     return render_template('base.html', 
-                           selected_content=Content.ALL[route],
-                           Content=Content,
+                           selected_content=content.Content.ALL[route],
+                           Content=content.Content,
                            failed_login=failed_login)
 
