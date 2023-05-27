@@ -9,4 +9,9 @@ flask run &
 # run tests
 pytest
 
-kill %-
+#kill %-
+jobs
+sleep 10
+jobs
+kill %%
+jobs
