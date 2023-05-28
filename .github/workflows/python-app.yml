@@ -35,7 +35,7 @@ jobs:
         mypy . --strict
     - name: start flask server
       run: |
-        nohup flask run
+        flask run &
     - name: run pytests
       run: |
         pytest
