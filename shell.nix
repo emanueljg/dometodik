@@ -8,6 +8,7 @@ with pkgs; let
     pytest
     pytest-playwright
     mypy
+    types-requests
   ]);
 in
 mkShell {

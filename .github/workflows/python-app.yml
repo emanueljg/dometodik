@@ -13,7 +13,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
 
@@ -26,14 +26,16 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: install playwright
       run: |
         playwright install
-    - name: run tests
-      # some insane esoteric github actions quirk introduces a race condition bug (!?)
-      # which in the script which tries to kill before the flask server has started.
-      # this occurs in posix sh, so we use bash here instead.
+    - name: Type check with mypy
       run: |
-        bash do_test.sh
+        mypy . --strict
+    - name: start flask server
+      run: |
+        nohup flask run
+    - name: run pytests
+      run: |
+        pytest

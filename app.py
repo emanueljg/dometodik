@@ -2,7 +2,7 @@
 
 from flask import Flask, redirect, url_for, render_template, request
 from flask.scaffold import T_route
-from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+from flask_login import login_user, logout_user, login_required, current_user
 from dataclasses import dataclass
 from typing import Collection, ClassVar, Any
 from collections.abc import Callable
@@ -22,6 +22,9 @@ Route = Callable[[T_route], T_route]
 @app.route('/login', methods=(['POST']))
 def login() -> Any:
     """Login a user."""
+    if current_user.is_authenticated:
+        return redirect('/')
+    
     email = request.form.get('email')
     password = request.form.get('password')
     found_user = User.with_login(email, password)
@@ -30,10 +33,9 @@ def login() -> Any:
         return redirect('/')
     else:
         return base_render(route='login', failed_login=True) 
-
         
-
 @app.route('/logout', methods=(['GET']))
+@login_required  # type: ignore
 def logout() -> Any:
     logout_user()
     return redirect('/login')
