@@ -13,14 +13,30 @@ permissions:
   contents: read
 
 jobs:
-  ci:
-
+  quality-check:
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
 
+      - name: linter
+      - uses: py-actions/flake8@v2
+
+      - name: format check
+      - uses: psf/black@stable    
+
+      - name: type check
+      - uses: jpetrucciani/mypy-check@master
+        with: 
+        mypy_flags: '--strict'
+
+  test:
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Set up Python 3.11
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v4
       with:
         python-version: "3.10"
     - name: Install dependencies
@@ -30,15 +46,6 @@ jobs:
     - name: install playwright
       run: |
         playwright install
-    - name: lint
-      run: |
-        flake8 **/*.py
-    - name: format check
-      run: |
-        black . --check
-    - name: Type check with mypy
-      run: |
-        mypy . --strict
     - name: start flask server
       run: |
         flask run &
