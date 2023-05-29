@@ -3,7 +3,7 @@
 __all__ = ["Content"]
 
 from dataclasses import dataclass
-from typing import ClassVar, Hashable, Any
+from typing import ClassVar, Any
 from flask_login import current_user
 
 # written this way to avoid circular import

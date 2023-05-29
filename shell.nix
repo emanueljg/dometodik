@@ -10,6 +10,7 @@ with pkgs; let
     mypy
     types-requests
     black
+    flake8
   ]);
 in
 mkShell {

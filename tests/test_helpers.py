@@ -1,5 +1,5 @@
 from pytest import fixture, raises
-from typing import Any, NoReturn
+from typing import Any
 from collections.abc import Iterator, Iterable
 
 from ..helpers import elems_with_attrs

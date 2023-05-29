@@ -2,11 +2,9 @@
 
 from flask_login import UserMixin
 from typing import Union, Optional
-
 from .helpers import elems_with_attrs
 
 __all__ = ["UserMixin"]
-
 Users = dict[str, "User"]
 
 
