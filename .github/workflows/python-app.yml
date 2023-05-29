@@ -30,7 +30,7 @@ jobs:
       - name: type check
         uses: jpetrucciani/mypy-check@master
         with: 
-        mypy_flags: '--strict'
+          mypy_flags: '--strict'
 
   test:
     runs-on: ubuntu-latest
