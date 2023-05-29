@@ -1,5 +1,5 @@
 ## requirements
-* Python 3.11 to be sure, but most 3.x versions should work too.
+* Python 3.10 or higher 
 * requirements specified in requirements.txt (installation follows below)
 
 ## setup using [venv](https://docs.python.org/3/library/venv.html) (unix)

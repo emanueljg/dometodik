@@ -1,5 +1,5 @@
 from pytest import fixture, raises
-from typing import Any, Never, NoReturn
+from typing import Any, NoReturn
 from collections.abc import Iterator, Iterable
 
 from ..helpers import elems_with_attrs
@@ -12,11 +12,11 @@ class C:
         self.z = z
 
 @fixture
-def empty_iterator() -> Iterator[Never]:
+def empty_iterator() -> Iterator[None]:
     return iter([])
 
 @fixture
-def empty_list() -> list[Never]:
+def empty_list() -> list[None]:
     return []
 
 @fixture
@@ -29,11 +29,11 @@ def iterable_of_c() -> Iterable[C]:
 def list_of_c(iterable_of_c: Iterable[C]) -> list[C]:
     return list(iterable_of_c)
 
-def test_empty_iter_elems_with_attrs(empty_list: list[Never]) -> None:
+def test_empty_iter_elems_with_attrs(empty_list: list[None]) -> None:
     platter = elems_with_attrs(empty_list, walk='silly')
     assert next(platter, 'tipped over') == 'tipped over'
 
-def test_empty_list_elems_with_attrs(empty_iterator: Iterator[Never]) -> None:
+def test_empty_list_elems_with_attrs(empty_iterator: Iterator[None]) -> None:
     got = elems_with_attrs(empty_iterator, parrot='polly')
     assert next(got, 'stone dead') == 'stone dead'
 

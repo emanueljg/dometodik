@@ -1,7 +1,7 @@
 { pkgs ? "<nixpkgs>" {} }:
 
 with pkgs; let
-  python' = python311.withPackages (p: with p; [
+  python' = python310.withPackages (p: with p; [
     flask
     flask-login
     playwright
