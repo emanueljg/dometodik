@@ -35,7 +35,7 @@ jobs:
         flake8 **/*.py
     - name: format check
       run: |
-        black .
+        black . --check
     - name: Type check with mypy
       run: |
         mypy . --strict
