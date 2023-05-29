@@ -27,11 +27,12 @@ def elems_with_attrs(
     """Get elements of an `Iterable` with the specified attributes
 
     The return type differs based on the type of the collection:
-    - A subtype of `Mapping` in turn returns an `Iterator` of tuples
-      representing key-value pairs in which the 'value' object has
-      the specified attributes.
-    - A subtype of `Iterable` **which isn't a `Mapping`** returns an `Iterator` of
-      elements with the same type as the elements of the `Iterable`.
+    - A subtype of `Mapping` in turn returns an `Iterator` of
+      tuples representing key-value pairs in which the 'value'
+      object has the specified attributes.
+    - A subtype of `Iterable` **which isn't a `Mapping`** returns an
+      `Iterator` of elements with the same type as the elements of the
+      `Iterable`.
 
     :param itr: The `Iterable` to filter
     :param attrs: Kwargs of attributes to filter the `Iterable` with
@@ -61,8 +62,8 @@ def base_render(route: str = "home", failed_login: bool = False) -> str:
         2. This function gets called with the route '/home'
         3. Resolve this route to a Content object
             * i.e. `Content.ALL['home']` => Content('home', has_text=true, ...)
-        4. Send the content object as well as some other info as Jinja variables
-        5. Through templating magic create the site HTML and CSS based on said object
+        4. Send the content object as well as some other info as Jinja vars.
+        5. Through templating create the site HTML and CSS based on the object
             * Set the "Home" button as active
             * Set the home.html as displayed
 

@@ -1,7 +1,5 @@
 from pytest import fixture
-from requests import Response
 from typing import Optional
-import re
 from playwright.sync_api import Page, expect, Locator, _generated
 
 

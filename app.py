@@ -1,20 +1,20 @@
 """A module containing flask app init and routes."""
 
-from flask import Flask, redirect, url_for, render_template, request
+from flask import Flask, redirect, request
 from flask.scaffold import T_route
 from flask_login import login_user, logout_user, login_required, current_user
-from dataclasses import dataclass
-from typing import Collection, ClassVar, Any
+from typing import Any
 from collections.abc import Callable
 
-from .auth import init_flask_login, load_user
-from .helpers import elems_with_attrs, base_render
+from .auth import init_flask_login
+from .helpers import base_render
 from .content import Content
 from .user import User
 
 
 app = Flask(__name__)
-app.secret_key = "9a5696420b61932bf0690347fd0a7653e62091ff8f359dc1bbfbec461caf22d3"
+with open("flask_secret", "r") as f:
+    app.secret_key = f.read()
 init_flask_login(app)
 
 Route = Callable[[T_route], T_route]
