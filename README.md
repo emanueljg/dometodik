@@ -19,9 +19,9 @@ pip install -r requirements.txt
 playwright install
 ```
 
-## test
+## format and test
 ```sh
-./do_test.sh
+./prepare.sh
 ```
 
 ## quick and dirty setup (not recommended)

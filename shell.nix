@@ -9,6 +9,7 @@ with pkgs; let
     pytest-playwright
     mypy
     types-requests
+    black
   ]);
 in
 mkShell {

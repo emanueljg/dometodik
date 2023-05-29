@@ -1,6 +1,6 @@
 """A module containing helper functions."""
 
-__all__ = ['elems_with_attrs', 'base_render']
+__all__ = ["elems_with_attrs", "base_render"]
 
 from flask import render_template
 from collections.abc import Iterable, Iterator, Mapping, Hashable
@@ -20,9 +20,10 @@ def _obj_has_attrs(o: Any, **attrs: Any) -> bool:
     """
     return all(getattr(o, k) == v for k, v in attrs.items())
 
-def elems_with_attrs(iterable: Iterable[Any]|Mapping[Hashable, Any],
-                     **attrs: Any) \
-                    -> Iterator[Any]|Iterator[tuple[Hashable, Any]]:
+
+def elems_with_attrs(
+    iterable: Iterable[Any] | Mapping[Hashable, Any], **attrs: Any
+) -> Iterator[Any] | Iterator[tuple[Hashable, Any]]:
     """Get elements of an `Iterable` with the specified attributes
 
     The return type differs based on the type of the collection:
@@ -33,20 +34,22 @@ def elems_with_attrs(iterable: Iterable[Any]|Mapping[Hashable, Any],
       elements with the same type as the elements of the `Iterable`.
 
     :param itr: The `Iterable` to filter
-    :param attrs: Kwargs of attributes to filter the `Iterable` with 
+    :param attrs: Kwargs of attributes to filter the `Iterable` with
 
     :return: An `Iterator` of elements
     """
     if isinstance(iterable, Mapping):
         iterable = iterable.items()
+
         def __obj_has_attrs(o: Any, **attrs: Any) -> bool:
             return _obj_has_attrs(o[1], **attrs)
-    else: __obj_has_attrs = _obj_has_attrs
+
+    else:
+        __obj_has_attrs = _obj_has_attrs
     return (o for o in iterable if __obj_has_attrs(o, **attrs))
 
 
-
-def base_render(route: str = 'home', failed_login: bool = False) -> str:
+def base_render(route: str = "home", failed_login: bool = False) -> str:
     """Render base HTML with custom Jinja variables
 
     This facilitates things like displaying the selected content based
@@ -62,14 +65,15 @@ def base_render(route: str = 'home', failed_login: bool = False) -> str:
         5. Through templating magic create the site HTML and CSS based on said object
             * Set the "Home" button as active
             * Set the home.html as displayed
-        
+
     :param route: The currently selected route, evaluates to `Content`
     :param failed_login: Whether the last login attempt failed or not
 
     :return: The rendered HTML
     """
-    return render_template('base.html', 
-                           selected_content=content.Content.ALL[route],
-                           Content=content.Content,
-                           failed_login=failed_login)
-
+    return render_template(
+        "base.html",
+        selected_content=content.Content.ALL[route],
+        Content=content.Content,
+        failed_login=failed_login,
+    )

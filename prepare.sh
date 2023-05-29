@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# code format
+black .
+
 # type check
 mypy . --strict
 

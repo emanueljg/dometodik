@@ -26,3 +26,4 @@ typing_extensions==4.6.2
 urllib3==2.0.2
 Werkzeug==2.3.4
 types-requests==2.30.0.0
+black==23.1.0
