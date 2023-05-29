@@ -28,9 +28,9 @@ jobs:
       uses: psf/black@stable    
 
     - name: type check
-      uses: jpetrucciani/mypy-check@master
-      with: 
-        mypy_flags: '--strict'
+      run: |
+        pip install mypy==1.3.0
+        mypy . --strict
 
   test:
     runs-on: ubuntu-latest
