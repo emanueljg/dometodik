@@ -57,7 +57,7 @@ part of a Content object. A more technical description of this can be found in t
 `helpers.elems_with_attrs`. 
 
 That's the gist of it. Read up on the code internals to understand in detail how it all plays out. You have to really
-make an effort to understand it or you will feel hopeless when using it Try adding other
+make an effort to understand it or you will feel hopeless when using it. Try adding other
 `Content` objects yourself to cement your understanding of it.
 
 If you're adding a new feature, be sure to add test(s) for it in `tests/test_<your feature>.py`. A feature without
