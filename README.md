@@ -43,7 +43,7 @@ The basic model works as follows:
 ```py
 @app.route('/thing')  # do this for route /thing 
 def thing():
-  return <h1>Hello world</h1>  # return html like this
+  return '<h1>Hello world</h1>'  # return html like this
   return render_remplate("file.html")  # or like this
 ```
 The way this website is designed is that we basically only have one main route, that being
