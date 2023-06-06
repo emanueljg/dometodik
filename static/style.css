@@ -73,7 +73,39 @@ body {
   display: none; /* Hide all content by default */
 }
 
+/*-------------------------------Members page---------------------------------------------*/
 
+h1 {
+  color: #df5c10;
+  font-size: 24px;
+  text-align: center;
+}
+
+h2 {
+  color: #13cf26;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.img{
+  display: block;
+  margin: 0 auto;
+  max-width: 200px;
+}
+
+.p{
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.p a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.p a:hover{
+  text-decoration: underline;
+}
 
 
 
