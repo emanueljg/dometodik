@@ -75,5 +75,5 @@ class Content:
 Content("login")
 Content("logout", has_text=False, protected=True)
 Content("home")
-Content("calendar", protected=True)
 Content("members")
+Content("calendar", protected=True)

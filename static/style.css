@@ -13,9 +13,12 @@ body {
 }
 
 .container {
+  display: flex;
+  flex-direction: column;
   position: absolute;
   top: 100px;
-  min-height: calc(100% - 200px);
+  height: calc(100% - 200px);
+  min-height: 350px;
 
   width: 50%;
   min-width: 600px;
@@ -34,7 +37,6 @@ body {
   display: flex;
   flex-direction: column;
   width: 160px;
-  
 }
 
 .content-buttons .contentButton {
@@ -60,20 +62,70 @@ body {
   background-color: #fff;
 }
 
-.content.selected {
-  display: inherit;
-}
 
 /* Hover animation */
 .content-buttons .contentButton:hover {
   transform: scaleX(1.1);
 }
 
+
 .content {
   display: none; /* Hide all content by default */
 }
 
+.content.selected {
+  display: flex;
+  height: 100%;
+  
+}
 
+.debug {
+  border-style: solid;
+}
+
+#todo-bar {
+  height: 100%;
+  width: 200px;
+  border-style: solid;
+}
+
+#todo-bar-title {
+  text-align: center;
+}
+
+#todo {
+  position: relative;
+  border-right: 0px;
+}
+
+#todo-title {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.todo-repr {
+  text-align: center;
+  width: fit-content;
+  margin: auto;
+  margin-top: 15px;
+}
+
+.todo-expand-button {
+  position: absolute;
+  align: right;
+  bottom: 0px;
+  right: 0px;
+  font-size: 20px;
+  max-height: 30px;
+}
+
+#calendar-container {
+  width: 100%;
+  height: 100%;
+}
+
+#calendar-days {
+}
 
 
 
