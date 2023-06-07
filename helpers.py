@@ -4,7 +4,8 @@ __all__ = ["elems_with_attrs", "base_render"]
 
 from flask import render_template
 from collections.abc import Iterable, Iterator, Mapping, Hashable
-from typing import Any
+from typing import Any, Optional
+from datetime import date
 
 
 from . import content
@@ -51,9 +52,9 @@ def elems_with_attrs(
     return (o for o in iterable if __obj_has_attrs(o, **attrs))
 
 
-def base_render(route: str = "home",
-                failed_login: bool = False,
-                calendar: Calendar = None) -> str:
+def base_render(
+    route: str = "home", failed_login: bool = False, calendar: Optional[Calendar] = None
+) -> str:
     """Render base HTML with custom Jinja variables
 
     This facilitates things like displaying the selected content based
@@ -80,5 +81,5 @@ def base_render(route: str = "home",
         selected_content=content.Content.ALL[route],
         Content=content.Content,
         failed_login=failed_login,
-        calendar=calendar,
+        calendar=calendar or Calendar(date(year=1970, month=1, day=1)),
     )

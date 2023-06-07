@@ -27,7 +27,12 @@
   <div id="calendar-days" class="debug">
   {% for date in calendar.dates_of_month %}
     <div class="debug calendar-day">
-      <p>{{date.month}}/{{date.day}} {{calendar.preview_day_todos(date)}}</p>
+      <p class="day-date debug">{{date.month}}/{{date.day}}</p>
+      {% set len = calendar.day_todos(date).__len__() %}
+      {% if len != 0 %}
+        <p class="day-todos debug">{{calendar.preview_day_todos(date)}}</p>
+        <p class="day-todos-total debug">{{calendar.day_todos(date).__len__()}}</p>
+      {% endif %}
     </div>
   {% endfor %}
   </div>
