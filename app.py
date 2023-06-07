@@ -57,12 +57,18 @@ def logout() -> Any:
     logout_user()
     return redirect("/login")
 
-@app.route("/change-cal-:unit")
-@login_required
-def change_cal_unit(unit: str) -> Any:
+
+@app.route("/change-cal-unit", methods=(["POST"]))
+@login_required  # type: ignore
+def change_cal_unit() -> Any:
     try:
-        CAL.current_date.replace(**request.args)
-    except S
+        month = int(request.args.get('month') or CAL.current_date.month)
+        year = int(request.args.get('year') or CAL.current_date.year)
+        CAL.current_date = CAL.current_date.replace(month=month, year=year)
+    except (ValueError, TypeError):
+        pass  # just redirect anyway later
+    finally:
+        return redirect("/calendar")
 
 
 @app.route(f'/<any({", ".join(Content.HAS_TEXT())}):content>')

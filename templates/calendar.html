@@ -16,12 +16,19 @@
   <div id="calendar-title" class="debug">
     <h3>Calendar</h3>
     <div id="month-switcher">
-      <button class="switch-button" href="/add-month">-</button>
+    <form method="POST" action="/change-cal-unit?month={{calendar.current_date.month - 1}}">
+      <button type="submit" class="switch-button">-</button>
+    </form>
       <p>{{calendar.current_date.month}}</p>
-      <button class="switch-button" href="/remove-month">+</button>
-      <button class="switch-button" href="/add-year">+</button>
+    <form method="POST" action="/change-cal-unit?month={{calendar.current_date.month + 1}}">
+      <button type="submit" class="switch-button">+</button>
+    </form>
+    <form method="POST" action="/change-cal-unit?year={{calendar.current_date.year - 1}}">
+      <button type="submit" class="switch-button">-</button>
+    </form>
       <p>{{calendar.current_date.year}}</p>
-      <button class="switch-button" href="/remove-year">+</button>
+    <form method="POST" action="/change-cal-unit?year={{calendar.current_date.year + 1}}">
+      <button type="submit" class="switch-button">+</button>
     </div>
   </div>
   <div id="calendar-days" class="debug">

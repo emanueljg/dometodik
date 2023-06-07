@@ -38,6 +38,14 @@ class Calendar:
     todos: dict[str, list[Todo]] = field(default_factory=lambda: defaultdict(list))
 
     @property
+    def day_is_max(self) -> bool:
+        try:
+            self.current_date.replace(day=self.current_date.day + 1)
+        except ValueError:
+            return True
+        return False
+
+    @property
     def dates_of_month(self) -> Iterator[date]:
         for day in range(1, 32):
             try:  # ask for forgiveness when going 1 day above month max
