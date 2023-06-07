@@ -5,11 +5,13 @@ from flask.scaffold import T_route
 from flask_login import login_user, logout_user, login_required, current_user
 from typing import Any
 from collections.abc import Callable
+from datetime import date
 
 from .auth import init_flask_login
 from .helpers import base_render
 from .content import Content
 from .user import User
+from .calendar import Calendar, Todo
 
 
 app = Flask(__name__)
@@ -50,4 +52,17 @@ def logout() -> Any:
 
 @app.route(f'/<any({", ".join(Content.HAS_TEXT())}):content>')
 def content_route(content: str) -> Any:
-    return base_render(route=content)
+    d1 = date(year=2023, month=1, day=1)
+    d2 = date(year=2023, month=1, day=2)
+    t1 = Todo(d1, "todo1")
+    t2 = Todo(d2, "todo2")
+    cal = Calendar(d1)
+    cal.add_todo(t1)
+    cal.add_todo(t2)
+    for dom in cal.dates_of_month:
+        for todo in cal.day_todos(dom):
+            print(todo)
+    for todo in cal.todos_of_month:
+        print(todo)
+    return base_render(route=content,
+                       calendar=cal)

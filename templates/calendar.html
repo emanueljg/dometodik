@@ -3,18 +3,32 @@
     <h3>TODOs</h3>
   </div>
   <div id="todo-list" class="debug">
-    <div id="todo" class="debug">
-      <p class="todo-repr">(1) 2023-06-06</p>
-      <p id="todo-title">Wordswordswords I AM TYPING WOORDS</p>
-      <button class="todo-expand-button">↓</button>
-    </div>
+    {% for n, todo in calendar.todos_of_month %}
+      <div class="todo debug">
+        <p class="todo-repr">({{n}}) {{todo.date.__str__()}}</p>
+        <p class="todo-title">{{todo.text}}</p>
+        <button class="todo-expand-button">↓</button>
+      </div>
+    {% endfor %}
   </div>
 </div>  
 <div id="calendar-container" class="debug">
   <div id="calendar-title" class="debug">
     <h3>Calendar</h3>
+    <div id="month-switcher">
+      <button class="switch-button" href="/add-month">-</button>
+      <p>{{calendar.current_date.month}}</p>
+      <button class="switch-button" href="/remove-month">+</button>
+      <button class="switch-button" href="/add-year">+</button>
+      <p>{{calendar.current_date.year}}</p>
+      <button class="switch-button" href="/remove-year">+</button>
+    </div>
   </div>
   <div id="calendar-days" class="debug">
-  <
+  {% for date in calendar.dates_of_month %}
+    <div class="debug calendar-day">
+      <p>{{date.month}}/{{date.day}} {{calendar.preview_day_todos(date)}}</p>
+    </div>
+  {% endfor %}
   </div>
 </div>

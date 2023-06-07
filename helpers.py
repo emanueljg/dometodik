@@ -8,6 +8,7 @@ from typing import Any
 
 
 from . import content
+from .calendar import Calendar
 
 
 def _obj_has_attrs(o: Any, **attrs: Any) -> bool:
@@ -50,7 +51,9 @@ def elems_with_attrs(
     return (o for o in iterable if __obj_has_attrs(o, **attrs))
 
 
-def base_render(route: str = "home", failed_login: bool = False) -> str:
+def base_render(route: str = "home",
+                failed_login: bool = False,
+                calendar: Calendar = None) -> str:
     """Render base HTML with custom Jinja variables
 
     This facilitates things like displaying the selected content based
@@ -77,4 +80,5 @@ def base_render(route: str = "home", failed_login: bool = False) -> str:
         selected_content=content.Content.ALL[route],
         Content=content.Content,
         failed_login=failed_login,
+        calendar=calendar,
     )
