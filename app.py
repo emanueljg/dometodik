@@ -25,9 +25,9 @@ Route = Callable[[T_route], T_route]
 d1 = date(year=2023, month=1, day=1)
 t1 = Todo(d1, "todo1")
 t2 = Todo(d1, "todo2")
-cal = Calendar(d1)
-cal.add_todo(t1)
-cal.add_todo(t2)
+CAL = Calendar(d1)
+CAL.add_todo(t1)
+CAL.add_todo(t2)
 
 
 @app.route("/")
@@ -57,7 +57,14 @@ def logout() -> Any:
     logout_user()
     return redirect("/login")
 
+@app.route("/change-cal-:unit")
+@login_required
+def change_cal_unit(unit: str) -> Any:
+    try:
+        CAL.current_date.replace(**request.args)
+    except S
+
 
 @app.route(f'/<any({", ".join(Content.HAS_TEXT())}):content>')
 def content_route(content: str) -> Any:
-    return base_render(route=content, calendar=cal)
+    return base_render(route=content, calendar=CAL)
