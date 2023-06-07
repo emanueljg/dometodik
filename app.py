@@ -62,8 +62,8 @@ def logout() -> Any:
 @login_required  # type: ignore
 def change_cal_unit() -> Any:
     try:
-        month = int(request.args.get('month') or CAL.current_date.month)
-        year = int(request.args.get('year') or CAL.current_date.year)
+        month = int(request.args.get("month") or CAL.current_date.month)
+        year = int(request.args.get("year") or CAL.current_date.year)
         CAL.current_date = CAL.current_date.replace(month=month, year=year)
     except (ValueError, TypeError):
         pass  # just redirect anyway later
