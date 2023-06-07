@@ -1,7 +1,7 @@
 """A module containing the calendar and TODOs"""
 
 from dataclasses import dataclass, field
-from datetime import date
+from datetime import date, datetime
 from collections import defaultdict
 from typing import Iterator, ClassVar
 
@@ -73,3 +73,15 @@ class Calendar:
         todo.calendar = self
         self.day_todos(todo.date).append(todo)
         return todo
+
+    @staticmethod
+    def get_time() -> str:
+        return datetime.today().strftime("%H:%M")
+
+    @staticmethod
+    def get_weekday() -> str:
+        return datetime.today().strftime("%A")
+
+    @staticmethod
+    def get_date() -> str:
+        return datetime.today().strftime("%Y-%m-%d")

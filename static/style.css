@@ -175,3 +175,9 @@ body {
   padding: 0 10px 0 10px;
   line-height: 3;  /* This magical value is the ONLY thing that centers the text and I have NO clue why */
 }
+
+#todo-bar-welcome {
+  padding-left: 10px;
+  line-height: auto;
+  font-style: oblique;
+}

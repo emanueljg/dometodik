@@ -2,6 +2,12 @@
   <div id="todo-bar-title" class="debug">
     <h3>TODOs</h3>
   </div>
+  <div id="todo-bar-welcome" class="debug">
+    <h4>CURRENT</h4>
+    <p>{{calendar.get_time()}}</p>
+    <p>{{calendar.get_weekday()}}</p>
+    <p>{{calendar.get_date()}}</p>
+  </div>
   <div id="todo-list" class="debug">
     {% for n, todo in calendar.todos_of_month %}
       <div class="todo debug">
