@@ -8,9 +8,13 @@ from app.helpers import elems_with_attrs
 # many functions are self-explanatory, cba
 # ruff: noqa: D103
 
+# pylint: disable=invalid-name, missing-function-docstring, redefined-outer-name
+
 
 class C:
     """Dummy class containing some attributes."""
+
+    # pylint: disable=too-few-public-methods
 
     def __init__(
         self: "C",

@@ -8,6 +8,8 @@ BASE_URL = "http://127.0.0.1:5000"
 class Status:
     """Just some status codes."""
 
+    # pylint: disable=too-few-public-methods
+
     SUCCESS = 200
     UNAUTHORIZED = 401
 

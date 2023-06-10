@@ -8,7 +8,7 @@ from typing import Any, ClassVar
 from flask_login import current_user
 
 # written this way to avoid circular import
-from . import helpers
+from . import helpers  # pylint: disable=cyclic-import
 
 Contents = dict[str, "Content"]
 

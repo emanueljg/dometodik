@@ -12,7 +12,7 @@ from . import content
 from .calendar import Calendar
 
 
-def _obj_has_attrs(o: Any, **attrs: Any) -> bool:  # noqa: ANN401
+def _obj_has_attrs(obj: Any, **attrs: Any) -> bool:  # noqa: ANN401
     """
     Check if an object has the specified attributes.
 
@@ -21,7 +21,7 @@ def _obj_has_attrs(o: Any, **attrs: Any) -> bool:  # noqa: ANN401
 
     :return: True if object has the specified attributes, False otherwise
     """
-    return all(getattr(o, k) == v for k, v in attrs.items())
+    return all(getattr(obj, k) == v for k, v in attrs.items())
 
 
 def elems_with_attrs(
@@ -47,8 +47,8 @@ def elems_with_attrs(
     if isinstance(iterable, Mapping):
         iterable = iterable.items()
 
-        def __obj_has_attrs(o: Any, **attrs: Any) -> bool:  # noqa: ANN401
-            return _obj_has_attrs(o[1], **attrs)
+        def __obj_has_attrs(obj: Any, **attrs: Any) -> bool:  # noqa: ANN401
+            return _obj_has_attrs(obj[1], **attrs)
 
     else:
         __obj_has_attrs = _obj_has_attrs

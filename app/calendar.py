@@ -23,18 +23,18 @@ class Todo:
         self.id_ = Todo.counter
         Todo.counter += 1
 
-    def __eq__(self: "Todo", o: object) -> bool:
+    def __eq__(self: "Todo", obj: object) -> bool:
         """Compare by custom id."""
-        if not isinstance(o, Todo):
+        if not isinstance(obj, Todo):
             return NotImplemented
-        return self.id_ == o.id_
+        return self.id_ == obj.id_
 
     @property
     def place(self: "Todo") -> int:
         """Return the placement of self in calendar right now."""
-        for n, todo in self.calendar.todos_of_month:
+        for num, todo in self.calendar.todos_of_month:
             if self == todo:
-                return n
+                return num
         raise ValueError
 
 
@@ -62,18 +62,18 @@ class Calendar:
     def todos_of_month(self: "Calendar") -> Iterator[tuple[int, Todo]]:
         """Aggregate all todos of all days of the current month."""
         todo_n = 1
-        for d in self.dates_of_month:
-            for todo in self.day_todos(d):
+        for day in self.dates_of_month:
+            for todo in self.day_todos(day):
                 yield todo_n, todo
                 todo_n += 1
 
-    def day_todos(self: "Calendar", date: date) -> list[Todo]:
-        """Return the todos of the date `date`."""
-        return self.todos[str(date)]
+    def day_todos(self: "Calendar", day: date) -> list[Todo]:
+        """Return the todos of the date `day`."""
+        return self.todos[str(day)]
 
-    def preview_day_todos(self: "Calendar", date: date) -> str:
+    def preview_day_todos(self: "Calendar", day: date) -> str:
         """Return a comma-seperated string of all the date's todos."""
-        return ", ".join(str(todo.place) for todo in self.day_todos(date))
+        return ", ".join(str(todo.place) for todo in self.day_todos(day))
 
     def add_todo(self: "Calendar", todo: Todo) -> Todo:
         """Add a todo to the calendar while setting self as the todo's calendar."""

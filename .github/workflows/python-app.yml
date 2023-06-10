@@ -33,6 +33,9 @@ jobs:
     - name: type check
       run: |
         mypy . --strict
+    - name: linter no. 2
+      run: |
+        pylint app tests
 
   test:
     runs-on: ubuntu-latest

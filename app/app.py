@@ -10,7 +10,7 @@ from werkzeug.wrappers.response import Response
 
 from .auth import init_flask_login
 from .calendar import Calendar, Todo
-from .content import Content
+from .content import Content  # pylint: disable=cyclic-import
 from .helpers import base_render
 from .user import User
 
@@ -36,7 +36,7 @@ def base() -> Response:
     return redirect("/home")
 
 
-@app.route("/login", methods=(["POST"]))
+@app.route("/login", methods=("POST",))
 def login() -> Response | str:
     """Login a user."""
     if current_user.is_authenticated:
@@ -51,7 +51,7 @@ def login() -> Response | str:
     return base_render(route="login", failed_login=True)
 
 
-@app.route("/logout", methods=(["GET"]))
+@app.route("/logout", methods=("GET",))
 @login_required
 def logout() -> Response:
     """Logout the user and redirect to login page."""
@@ -59,7 +59,7 @@ def logout() -> Response:
     return redirect("/login")
 
 
-@app.route("/change-cal-unit", methods=(["POST"]))
+@app.route("/change-cal-unit", methods=("POST",))
 @login_required
 def change_cal_unit() -> Response:
     """Change the calendars month or year."""
