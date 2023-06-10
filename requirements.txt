@@ -27,4 +27,5 @@ urllib3==2.0.2
 Werkzeug==2.3.4
 types-requests==2.30.0.0
 black==23.1.0
-flake8==6.0.0
+pylint==2.16.2
+ruff==0.0.269
