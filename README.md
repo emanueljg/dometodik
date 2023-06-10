@@ -1,5 +1,5 @@
 ## requirements
-* Python 3.10 or higher 
+* Python >= 3.11 
 * requirements specified in requirements.txt (installation follows below)
 
 ## setup using [venv](https://docs.python.org/3/library/venv.html) (unix)
@@ -19,7 +19,7 @@ pip install -r requirements.txt
 playwright install
 ```
 
-## format and test
+## lint, format and test
 ```sh
 ./prepare.sh
 ```

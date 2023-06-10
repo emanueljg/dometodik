@@ -1,22 +1,22 @@
 """A module containing flask app init and routes."""
 
-from flask import Flask, redirect, request
-from flask.scaffold import T_route
-from flask_login import login_user, logout_user, login_required, current_user
-from typing import Any
 from collections.abc import Callable
 from datetime import date
 
-from .auth import init_flask_login
-from .helpers import base_render
-from .content import Content
-from .user import User
-from .calendar import Calendar, Todo
+from flask import Flask, redirect, request
+from flask.scaffold import T_route
+from flask_login import current_user, login_required, login_user, logout_user
+from werkzeug.wrappers.response import Response
 
+from .auth import init_flask_login
+from .calendar import Calendar, Todo
+from .content import Content  # pylint: disable=cyclic-import
+from .helpers import base_render
+from .user import User
 
 app = Flask(__name__)
-with open("flask_secret", "r") as f:
-    app.secret_key = f.read()
+app.secret_key = "not very secret..."  # noqa: S105
+
 init_flask_login(app)
 
 Route = Callable[[T_route], T_route]
@@ -31,12 +31,13 @@ CAL.add_todo(t2)
 
 
 @app.route("/")
-def base() -> Any:
+def base() -> Response:
+    """Redirect root route to /home."""
     return redirect("/home")
 
 
-@app.route("/login", methods=(["POST"]))
-def login() -> Any:
+@app.route("/login", methods=("POST",))
+def login() -> Response | str:
     """Login a user."""
     if current_user.is_authenticated:
         return redirect("/")
@@ -47,30 +48,31 @@ def login() -> Any:
     if found_user:
         login_user(User.USERS[found_user.id])
         return redirect("/")
-    else:
-        return base_render(route="login", failed_login=True)
+    return base_render(route="login", failed_login=True)
 
 
-@app.route("/logout", methods=(["GET"]))
-@login_required  # type: ignore
-def logout() -> Any:
+@app.route("/logout", methods=("GET",))
+@login_required
+def logout() -> Response:
+    """Logout the user and redirect to login page."""
     logout_user()
     return redirect("/login")
 
 
-@app.route("/change-cal-unit", methods=(["POST"]))
-@login_required  # type: ignore
-def change_cal_unit() -> Any:
+@app.route("/change-cal-unit", methods=("POST",))
+@login_required
+def change_cal_unit() -> Response:
+    """Change the calendars month or year."""
     try:
         month = int(request.args.get("month") or CAL.current_date.month)
         year = int(request.args.get("year") or CAL.current_date.year)
         CAL.current_date = CAL.current_date.replace(month=month, year=year)
     except (ValueError, TypeError):
         pass  # just redirect anyway later
-    finally:
-        return redirect("/calendar")
+    return redirect("/calendar")
 
 
-@app.route(f'/<any({", ".join(Content.HAS_TEXT())}):content>')
-def content_route(content: str) -> Any:
+@app.route(f'/<any({", ".join(Content.with_text())}):content>')
+def content_route(content: str) -> str:
+    """Return a base html with the routed conted active."""
     return base_render(route=content, calendar=CAL)

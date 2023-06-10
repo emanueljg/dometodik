@@ -2,31 +2,34 @@
 
 __all__ = ["elems_with_attrs", "base_render"]
 
-from flask import render_template
-from collections.abc import Iterable, Iterator, Mapping, Hashable
-from typing import Any, Optional
+from collections.abc import Hashable, Iterable, Iterator, Mapping
 from datetime import date
+from typing import Any
 
+from flask import render_template
 
 from . import content
 from .calendar import Calendar
 
 
-def _obj_has_attrs(o: Any, **attrs: Any) -> bool:
-    """Check if an object has the specified attributes
+def _obj_has_attrs(obj: Any, **attrs: Any) -> bool:  # noqa: ANN401
+    """
+    Check if an object has the specified attributes.
 
     :param o: The object to check
     :param **attrs: The attributes' keys and values to check
 
     :return: True if object has the specified attributes, False otherwise
     """
-    return all(getattr(o, k) == v for k, v in attrs.items())
+    return all(getattr(obj, k) == v for k, v in attrs.items())
 
 
 def elems_with_attrs(
-    iterable: Iterable[Any] | Mapping[Hashable, Any], **attrs: Any
+    iterable: Iterable[Any] | Mapping[Hashable, Any],
+    **attrs: Any,  # noqa: ANN401,
 ) -> Iterator[Any] | Iterator[tuple[Hashable, Any]]:
-    """Get elements of an `Iterable` with the specified attributes
+    """
+    Get elements of an `Iterable` with the specified attributes.
 
     The return type differs based on the type of the collection:
     - A subtype of `Mapping` in turn returns an `Iterator` of
@@ -44,8 +47,8 @@ def elems_with_attrs(
     if isinstance(iterable, Mapping):
         iterable = iterable.items()
 
-        def __obj_has_attrs(o: Any, **attrs: Any) -> bool:
-            return _obj_has_attrs(o[1], **attrs)
+        def __obj_has_attrs(obj: Any, **attrs: Any) -> bool:  # noqa: ANN401
+            return _obj_has_attrs(obj[1], **attrs)
 
     else:
         __obj_has_attrs = _obj_has_attrs
@@ -53,9 +56,13 @@ def elems_with_attrs(
 
 
 def base_render(
-    route: str = "home", failed_login: bool = False, calendar: Optional[Calendar] = None
+    route: str = "home",
+    *,
+    failed_login: bool = False,
+    calendar: Calendar | None = None,
 ) -> str:
-    """Render base HTML with custom Jinja variables
+    """
+    Render base HTML with custom Jinja variables.
 
     This facilitates things like displaying the selected content based
     on the content route and peripheral things like styling the selected

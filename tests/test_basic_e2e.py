@@ -1,18 +1,22 @@
-from pytest import fixture
+"""Module contains basic end-to-end (e2e) tests."""
 import re
-from playwright.sync_api import Page, expect, Locator
+
+import pytest
+from playwright.sync_api import Locator, Page, expect
 
 BASE_URL = "http://127.0.0.1:5000"
 
 SELECTED_PATTERN = re.compile("selected")
 
 
-@fixture(scope="function", autouse=True)
-def start_page(page: Page) -> None:
+@pytest.fixture(autouse=True)
+def _start_page(page: Page) -> None:
+    """Go to the start page."""
     page.goto(BASE_URL)
 
 
 def test_home_redirect(page: Page) -> None:
+    """Going to `/` should redirect to `/home`."""
     expect(page).to_have_url(f"{BASE_URL}/home")
 
 
@@ -20,7 +24,8 @@ BtnContentPair = tuple[Locator, Locator]
 
 
 def _test_first_selected_second_not(
-    selected: BtnContentPair, not_selected: BtnContentPair
+    selected: BtnContentPair,
+    not_selected: BtnContentPair,
 ) -> None:
     for sel in selected:
         expect(sel).to_have_class(SELECTED_PATTERN)
@@ -29,6 +34,7 @@ def _test_first_selected_second_not(
 
 
 def test_page_nav(page: Page) -> None:
+    """Test clicking some content buttons and check content visbility toggle."""
     btns = page.locator("#contentButtons")
     home_button = btns.locator("#homeButton")
     members_button = btns.locator("#membersButton")
@@ -43,7 +49,6 @@ def test_page_nav(page: Page) -> None:
     _test_first_selected_second_not(*pairs)
 
     # [::1] reverses an iterable.
-    # (1, 2, 3)[::-1] = (3, 2, 1)
 
     # flip it!
     members_button.click()
