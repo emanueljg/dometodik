@@ -17,7 +17,7 @@
       </div>
 
       <!-- Generate contents -->
-      {% for CONTENT in Content.HAS_TEXT().values() %}
+      {% for CONTENT in Content.with_text().values() %}
         <div id="{{CONTENT.name}}" class="{{CONTENT.css_classify_content(selected_content)}}">
           {% include CONTENT.html %}
         </div>

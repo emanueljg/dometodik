@@ -1,30 +1,40 @@
-from pytest import fixture
-from typing import Optional
-from playwright.sync_api import Page, expect, Locator, _generated
-
+"""A module containing authentication end-to-end (e2e) tests."""
+import pytest
+from playwright.sync_api import Locator, Page, _generated, expect
 
 BASE_URL = "http://127.0.0.1:5000"
 
 
-def goto(page: Page, route: str) -> Optional[_generated.Response]:
+class Status:
+    """Just some status codes."""
+
+    SUCCESS = 200
+    UNAUTHORIZED = 401
+
+
+def goto(page: Page, route: str) -> _generated.Response | None:
+    """Goto the page `page` with the route `route`."""
     return page.goto(f"{BASE_URL}/{route}")
 
 
-@fixture(scope="function", autouse=True)
-def start_page(page: Page) -> None:
+@pytest.fixture(autouse=True)
+def _start_page(page: Page) -> None:
+    """Go to the start page."""
     page.goto(BASE_URL)
 
 
 def test_forbiddens(page: Page) -> None:
+    """Test that unauthorized can't access locked routes."""
     resp = goto(page, "logout")
-    assert resp is not None and resp.status == 401
+    assert resp is not None
+    assert resp.status == Status.UNAUTHORIZED
 
 
 def _locate_login_fail(login: Locator) -> Locator:
     return login.locator("#failed-login")
 
 
-def _do_login(page: Page, email: str, password: str, do_goto: bool = False) -> None:
+def _do_login(page: Page, email: str, password: str, *, do_goto: bool = False) -> None:
     if do_goto:
         goto(page, "login")
     login = page.locator("#login")
@@ -35,6 +45,7 @@ def _do_login(page: Page, email: str, password: str, do_goto: bool = False) -> N
 
 
 def test_bad_login(page: Page) -> None:
+    """Test login with bad credentials."""
     goto(page, "login")
     login = page.locator("#login")
 
@@ -48,6 +59,7 @@ def test_bad_login(page: Page) -> None:
 
 
 def test_good_login(page: Page) -> None:
+    """Test login with good credentials."""
     # login
     _do_login(page, "foo", "bar", do_goto=True)
 
@@ -56,11 +68,13 @@ def test_good_login(page: Page) -> None:
 
     # logout
     resp = goto(page, "logout")
-    assert resp is not None and resp.status == 200
+    assert resp is not None
+    assert resp.status == Status.SUCCESS
 
     # should be back to login
     expect(page).to_have_url(f"{BASE_URL}/login")
 
     # now we can't logout again
     resp = goto(page, "logout")
-    assert resp is not None and resp.status == 401
+    assert resp is not None
+    assert resp.status == Status.UNAUTHORIZED

@@ -1,5 +1,10 @@
 #!/bin/sh
 
+set -e
+
+# hardcore linter
+ruff .
+
 # code format
 black .
 
@@ -12,5 +17,5 @@ flask run &
 # run tests
 pytest
 
+# kill server
 kill %%
-#kill %1

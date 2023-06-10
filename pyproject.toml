@@ -1,0 +1,18 @@
+[tool.pytest.ini_options]
+pythonpath = [ "." ]
+
+[tool.ruff]
+select = [ "ALL" ]
+fix = true
+exclude = ['stubs']
+ignore = [ "D203", "D212", "S101"]
+
+[tool.mypy]
+strict = true
+packages = ["app", "tests"]
+exclude = [ '^__pycache__$' ]
+mypy_path = "stubs"
+
+[[tool.mypy.overrides]]
+module = 'flask_login.test_client'
+ignore_missing_imports = true

@@ -1,7 +1,7 @@
 { pkgs ? "<nixpkgs>" {} }:
 
 with pkgs; let
-  python' = python310.withPackages (p: with p; [
+  python' = python311.withPackages (p: with p; [
     flask
     flask-login
     playwright
@@ -10,7 +10,7 @@ with pkgs; let
     mypy
     types-requests
     black
-    flake8
+    pylint
   ]);
 in
 mkShell {
@@ -18,6 +18,7 @@ mkShell {
 
   packages = [
     python'
+    ruff
   ];
 
   shellHook = ''
