@@ -35,6 +35,7 @@ body {
   left: -160px;
   display: flex;
   flex-direction: column;
+
   width: 160px;
 }
 
@@ -95,11 +96,13 @@ body {
 .todo {
   position: relative;
   border-right: 0px;
+  width: 160px;
 }
 
-.todo-title {
+.todo-text {
   margin-left: 10px;
   margin-right: 10px;
+  margin-bottom: 40px;
 }
 
 .todo-repr {
@@ -109,13 +112,58 @@ body {
   margin-top: 15px;
 }
 
-.todo-expand-button {
+.todo-buttons {
   position: absolute;
-  align: right;
   bottom: 0px;
   right: 0px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end; 
+  height: 30px;
+
+  margin-top: 20px;
+}
+
+
+.todo-buttons button {
+  width: 30px;
   font-size: 20px;
-  max-height: 30px;
+  text-align: center;
+}
+
+.todo-deleter {
+  min-height: 100%;
+  text-indent: 0.07em;
+
+}
+
+.todo-toggler {
+  text-indent: -0.07em;
+  line-height: 1.35em;
+}
+
+.todo-editor {
+  display: none;
+  border-top: dashed;
+  padding-top: 20px;
+  padding-left: 10px;
+  margin-bottom: 40px;
+}
+
+.todo-editor > * {
+  margin-bottom: 10px;
+}
+
+.todo-editor-text {
+  min-width: 90%;
+  max-width: 90%;
+  text-wrap: wrap;
+}
+
+.todo-editor-date {
+  min-width: 90%;
+  max-width: 90%;
 }
 
 #calendar-container {
@@ -126,9 +174,6 @@ body {
 #calendar-title {
   display: flex;
   justify-content: space-evenly;
-}
-
-#calendar-days {
 }
 
 #month-switcher {

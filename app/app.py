@@ -72,6 +72,32 @@ def change_cal_unit() -> Response:
     return redirect("/calendar")
 
 
+@app.route("/remove-todo/<todo>", methods=("POST",))
+@login_required
+def remove_todo(todo: str) -> Response | tuple[str, int]:
+    """Remove a todo."""
+    for todo_n, _found_todo in CAL.todos_of_month:
+        if todo_n == int(todo):
+            CAL.remove_todo(todo_n)
+            return redirect("/calendar")
+
+    return "todo not found", 404
+
+
+@app.route("/change-todo/<todo>", methods=("POST",))
+@login_required
+def change_todo(todo: str) -> Response | tuple[str, int]:
+    """Change a todo."""
+    for todo_n, found_todo in CAL.todos_of_month:
+        if todo_n == int(todo):
+            found_todo.date = date.fromisoformat(request.form["date"])
+            found_todo.text = request.form["text"] or found_todo.text
+            CAL.update_todo(found_todo)
+            return redirect("/calendar")
+
+    return "todo not found", 404  # couldn't find todo
+
+
 @app.route(f'/<any({", ".join(Content.with_text())}):content>')
 def content_route(content: str) -> str:
     """Return a base html with the routed conted active."""
