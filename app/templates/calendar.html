@@ -10,10 +10,22 @@
   </div>
   <div id="todo-list" class="debug">
     {% for n, todo in calendar.todos_of_month %}
-      <div class="todo debug">
+      <div id="todo-{{n}}" class="todo debug">
         <p class="todo-repr">({{n}}) {{todo.date.__str__()}}</p>
-        <p class="todo-title">{{todo.text}}</p>
-        <button class="todo-expand-button">↓</button>
+        <p class="todo-text">{{todo.text}}</p>
+        <div class="todo-buttons">
+          <form method="POST">
+            <button type="submit" id="todo-deleter-{{n}}" class="todo-deleter" formaction="/remove-todo/{{n}}">x</button>
+          </form>
+          <button id="todo-toggler-{{n}}" class="todo-toggler" onclick="toggleTodoEditor({{n}})">⬍</button>
+        </div>
+        <form id="todo-editor-{{n}}" class="todo-editor" method="POST" action="/change-todo/{{n}}">
+          <label for="date">Date: </label>
+          <input type="date" class="todo-editor-date" name="date" value={{todo.date.__str__()}}>
+          <label for="text">Text: </label>
+          <textarea type="text" class="todo-editor-text" rows=7 name="text" placeholder="<unchanged>">{{todo.text}}</textarea>
+          <input type="submit">
+        </form>
       </div>
     {% endfor %}
   </div>

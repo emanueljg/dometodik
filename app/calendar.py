@@ -81,6 +81,42 @@ class Calendar:
         self.day_todos(todo.date).append(todo)
         return todo
 
+    def remove_todo(self: "Calendar", todo_n: int) -> Todo | None:
+        """
+        Remove a todo from the calendar.
+
+        Algorithm explanation: assuming the following:
+            nested_list = [
+                [a, b, c],
+                [d, e, f, g, h],
+                [X, j]
+            ],
+
+            target = #8, X (nexted_list[2][0]),
+        then the algorithm goes like this:
+
+        | n | target | sublist         | length | target in range? | new target | got |
+        -------------------------------------------------------------------------------
+        | 0 | 8      | [a, b, c]       | 3      | no (8 >= 3)      | 8 - 3 = 5  | N/A |
+        | 1 | 5      | [d, e, f, g, h] | 5      | no (5 >= 5)      | 5 - 5 = 5  | N/A |
+        | 2 | 0      | [X, j]          | 2      | yes (0 < 2)      | N/A        | 2,0 |
+        """
+        target = todo_n - 1
+        for day in self.dates_of_month:
+            day_todos = self.day_todos(day)
+            day_len = len(day_todos)
+            if target >= day_len:  # not in this day
+                target -= day_len  # decrease and try again
+            else:  # in this day
+                return day_todos.pop(target)  # pop it
+        return None
+
+    def update_todo(self: "Calendar", todo: Todo) -> Todo:
+        """Remove a todo and re-add it."""
+        self.remove_todo(todo.place)
+        self.add_todo(todo)
+        return todo
+
     @staticmethod
     def get_time() -> str:
         """Get today's time in `HH:MM` format."""
