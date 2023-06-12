@@ -1,7 +1,7 @@
 """A module containing flask app init and routes."""
 
 from collections.abc import Callable
-from datetime import date
+from datetime import date, datetime, timezone
 
 from flask import Flask, redirect, request
 from flask.scaffold import T_route
@@ -22,7 +22,7 @@ init_flask_login(app)
 Route = Callable[[T_route], T_route]
 
 
-d1 = date(year=2023, month=1, day=1)
+d1 = datetime.now(tz=timezone.utc).date()
 t1 = Todo(d1, "todo1")
 t2 = Todo(d1, "todo2")
 CAL = Calendar(d1)
@@ -69,6 +69,20 @@ def change_cal_unit() -> Response:
         CAL.current_date = CAL.current_date.replace(month=month, year=year)
     except (ValueError, TypeError):
         pass  # just redirect anyway later
+    return redirect("/calendar")
+
+
+@app.route("/add-todo", methods=("POST",))
+@login_required
+def add_todo() -> Response:
+    """Add a todo."""
+    CAL.add_todo(
+        Todo(
+            date=date.fromisoformat(request.form["date"]),
+            text=request.form["text"],
+        )
+    )
+
     return redirect("/calendar")
 
 
