@@ -74,7 +74,7 @@ class Calendar:
     def preview_day_todos(self: "Calendar", day: date) -> str:
         """Return a comma-seperated string of all the date's todos."""
         todos = self.day_todos(day)
-        return f' <b>({len(todos)}) </b>' + ", ".join(str(todo.place) for todo in todos)
+        return f" <b>({len(todos)}) </b>" + ", ".join(str(todo.place) for todo in todos)
 
     def add_todo(self: "Calendar", todo: Todo) -> Todo:
         """Add a todo to the calendar while setting self as the todo's calendar."""
