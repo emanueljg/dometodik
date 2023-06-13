@@ -75,6 +75,13 @@ body {
 
 /*-------------------------------Members page---------------------------------------------*/
 
+@media screen and (max-width:1024px) {
+  body{
+   max-width: 960px;
+   margin:0 auto;
+   padding: 20px; 
+  }
+}
 h1 {
   color: #df5c10;
   font-size: 24px;
