@@ -15,7 +15,12 @@ from .helpers import base_render
 from .user import User
 
 app = Flask(__name__)
+app.jinja_options = {
+    "trim_blocks": True,
+    "lstrip_blocks": True,
+}
 app.secret_key = "not very secret..."  # noqa: S105
+
 
 init_flask_login(app)
 
@@ -23,11 +28,7 @@ Route = Callable[[T_route], T_route]
 
 
 d1 = datetime.now(tz=timezone.utc).date()
-t1 = Todo(d1, "todo1")
-t2 = Todo(d1, "todo2")
 CAL = Calendar(d1)
-CAL.add_todo(t1)
-CAL.add_todo(t2)
 
 
 @app.route("/")
@@ -80,7 +81,7 @@ def add_todo() -> Response:
         Todo(
             date=date.fromisoformat(request.form["date"]),
             text=request.form["text"],
-        )
+        ),
     )
 
     return redirect("/calendar")
@@ -90,12 +91,8 @@ def add_todo() -> Response:
 @login_required
 def remove_todo(todo: str) -> Response | tuple[str, int]:
     """Remove a todo."""
-    for todo_n, _found_todo in CAL.todos_of_month:
-        if todo_n == int(todo):
-            CAL.remove_todo(todo_n)
-            return redirect("/calendar")
-
-    return "todo not found", 404
+    CAL.remove_todo(int(todo))
+    return redirect("/calendar")
 
 
 @app.route("/change-todo/<todo>", methods=("POST",))
@@ -110,6 +107,14 @@ def change_todo(todo: str) -> Response | tuple[str, int]:
             return redirect("/calendar")
 
     return "todo not found", 404  # couldn't find todo
+
+
+@app.route("/calendar-setup")
+@login_required
+def setup_calendar() -> Response:
+    """Clear the calendar. Special route."""
+    CAL.todos.clear()
+    return redirect("/calendar")
 
 
 @app.route(f'/<any({", ".join(Content.with_text())}):content>')
