@@ -26,7 +26,7 @@ def _add_todo(
     _day = adder.locator("input[name=date]")
 
     if day:
-        _day.fill(day)  # noqa: E701
+        _day.fill(day)
     adder.get_by_role("textbox", name="text").fill(text or "")
     adder.get_by_role("button", name="submit").click()
 
@@ -71,7 +71,7 @@ def test_add_todo(page: Page) -> None:
         todo = todos.nth(num)
         expect(todo).to_contain_text(f"({num + 1}) {_isodate(day)} ")
         if text:
-            expect(todo).to_contain_text(text)  # noqa: E701
+            expect(todo).to_contain_text(text)
 
         # check calendar list
         cal_day = page.locator(".calendar-day").nth(day.day - 1)
