@@ -8,7 +8,7 @@
     <p>{{calendar.get_weekday()}}</p>
     <p>{{calendar.get_date()}}</p>
   </div>
-  <div id="todo-adder">
+  <div>
     <h4>Add new TODO</h4>
     <form id="todo-adder" class="todo-editor todo-adder" method="POST" action="/add-todo">
       <label for="date">Date: </label>
@@ -19,7 +19,7 @@
     </form>
   </div>
   <div id="todo-list">
-    {% for n, todo in calendar.todos_of_month %}
+    {%- for n, todo in calendar.todos_of_month -%}
       <div id="todo-{{n}}" class="todo">
         <p class="todo-repr">({{n}}) {{todo.date.__str__()}}</p>
         <p class="todo-text">{{todo.text}}</p>
@@ -37,7 +37,7 @@
           <input type="submit">
         </form>
       </div>
-    {% endfor %}
+    {%- endfor -%}
   </div>
 </div>  
 <div id="calendar-container" class="debug">
