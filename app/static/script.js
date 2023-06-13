@@ -7,7 +7,7 @@ function showTodoEditor(n) {
   // show editor
   todo.getElementById("todo-editor-" + n).style.display = "unset"
   // 
-}
+};
 
 function toggleTodoEditor(n) {
   let todo = document.getElementById("todo-" + n)
@@ -23,5 +23,23 @@ function toggleTodoEditor(n) {
     editor.style.display = "none"
     todoDeleter.style.display = "inherit"
   }
-  
+};
+
+function toggleContentButtons() {
+  const toggler = document.getElementById("content-button-toggler")
+  const btns = document.querySelectorAll('.contentButton')
+
+  if (toggler.innerText == "☰") {
+    btns.forEach((btn) => {
+      btn.style.display = "inherit"  
+    })    
+    toggler.style.right = "200px"
+    toggler.innerText = "→"
+  } else {
+    btns.forEach((btn) => {
+      btn.style.display = "none"  
+    })   
+    toggler.style.right = "30px"
+    toggler.innerText = "☰"
+  }
 }
