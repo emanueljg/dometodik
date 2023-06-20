@@ -1,3 +1,52 @@
+[tool.poetry]
+name = "dometodik"
+version = "1.0.0"
+description = ""
+authors = [
+  "Emanuel Johnson Godin <emanueljohnsongodin@gmail.com>"
+]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+flask = "2.3.2"
+Flask-Login = "0.6.2"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.3.0"
+playwright = "1.34.0"
+pytest-playwright = "^0.3.3"
+pytest = "^7.3.1"
+black = "^23.1.0"
+taskipy = "^1.11.0"
+ruff = "^0.0.270"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+ # tasks
+[tool.taskipy.tasks]
+lint = "ruff . --no-fix"
+LINT = "ruff . --fix"
+
+format = "black . --check"
+FORMAT = "black ."
+
+typecheck = "mypy . --strict"
+
+check = "task lint && task format && task typecheck"
+CHECK = "task LINT && task FORMAT && task typecheck"
+
+run = "flask run"
+
+test = "pytest"
+TEST = "task run & task test"
+
+precommit = "task check && task test"
+PRECOMMIT = "task CHECK && task TEST"
+
+# test misc
+
 [tool.pytest.ini_options]
 pythonpath = [ "." ]
 

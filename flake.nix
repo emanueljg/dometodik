@@ -6,8 +6,11 @@
   outputs = { self, nixpkgs }: let 
     system = "x86_64-linux";
     pkgs = import nixpkgs { inherit system; };
+    pkg = import ./package.nix { inherit pkgs; };
     devShell = import ./shell.nix { inherit pkgs; };
+
   in {
+    packages.${system}.default = pkg;
     devShells.${system}.default = devShell;
   };
 }

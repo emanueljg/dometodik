@@ -11,9 +11,6 @@ black .
 # type check
 mypy . --strict
 
-# linter no.2
-pylint app tests
-
 # start up server
 flask run &
 

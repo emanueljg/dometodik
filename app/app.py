@@ -121,3 +121,7 @@ def setup_calendar() -> Response:
 def content_route(content: str) -> str:
     """Return a base html with the routed conted active."""
     return base_render(route=content, calendar=CAL)
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port="3000", debug=True)
