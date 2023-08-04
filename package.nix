@@ -1,9 +1,5 @@
-{ 
-  pkgs ? "<nixpkgs>", 
-  python ? pkgs.python3
-}:
+{ pkgs ? <nixpkgs> {} }:
 
-pkgs.poetry2nix.mkPoetryApplication {
-  projectDir = ./.;
-  inherit python;
-}
+pkgs.poetry2nix.mkPoetryApplication (
+  import ./poetry.nix { inherit pkgs; }
+)
