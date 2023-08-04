@@ -50,7 +50,7 @@ jobs:
         playwright install
     - name: start flask server
       run: |
-        flask --app dometodik run
+        flask --app dometodik run &
     - name: run pytests
       run: |
         pytest
