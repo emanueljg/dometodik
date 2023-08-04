@@ -67,6 +67,34 @@ Also - this code has strict checks and if you don't check the code you commit it
 locally before making a PR. 
 
 
+## Nix usage
+This repository supports nix usage through `flake.nix`, which contains two parts:
+  - Runnable package(s)
+  - NixOS module (useful for e.g. web servers running NixOS) 
+
+### Ad-hoc package/app usage
+```sh
+# Start on localhost port 8000 (gunicorn)
+nix run github:emanueljg/dometodik#run
+# or, equivalent:
+nix run github:emanueljg/dometodik
+
+# start on localhost port 5000 (raw flask run)
+nix run github:emanueljg/dometodik#debug
+
+# e2e tests
+nix run github:emanueljg/dometodik#test
+```
+
+### Module usage
+Planned but not implemented yet. 
+
+
+For more details, refer to `flake.nix` as well as Nix documentation.
+
+
+
+
 
  
 
