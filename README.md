@@ -113,7 +113,7 @@ Website is accessible on `http://127.0.0.1:8000`.
 }
 ```
 
-#### 2.2 Example configuration
+#### Example configuration
 ```nix
 { dometodik, ... }: {
 
@@ -142,7 +142,7 @@ Website is accessible on `http://127.0.0.1:8000`.
   };
 }
 ```
-#### 2.3 Quick reference
+#### Quick reference
 All available module options set to their defaults.
 ```nix
   services.dometodik = {
