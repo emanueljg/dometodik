@@ -70,7 +70,9 @@ locally before making a PR.
 ## Nix usage
 This repository supports nix usage through `flake.nix`, which contains two parts:
   - Runnable package(s)
-  - NixOS module (useful for e.g. web servers running NixOS) 
+  - NixOS module (useful for e.g. dedicated web servers running NixOS) 
+
+Note that you *need* a flake-enabled setup to use this repo.
 
 ### Ad-hoc package/app usage
 ```sh
@@ -86,11 +88,74 @@ nix run github:emanueljg/dometodik#debug
 nix run github:emanueljg/dometodik#test
 ```
 
-### Module usage
-Planned but not implemented yet. 
+### Module
 
+#### Add to flake inputs
+```nix
+inputs.dometodik = {
+  url = "github:emanueljg/dometodik";
+  # useful to avoid unnecessary build time
+  #inputs.nixpkgs.follows = "nixpkgs"; 
+};
+```
+#### Module quickstart
+This adds a very simple systemd service that starts the webserver on boot.
+Website is accessible on `http://127.0.0.1:8000`.
+```nix
+{ dometodik, ... }: {
 
-For more details, refer to `flake.nix` as well as Nix documentation.
+  imports = [ dometodik.nixosModules.default ];
+
+  services.dometodik = {
+    enable = true;
+    openFirewall = true;  # opens port 80 and 443 in firewall
+  ];
+}
+```
+
+#### 2.2 Example configuration
+```nix
+{ dometodik, ... }: {
+
+  imports = [ dometodik.nixosModules.default ];
+
+  services.dometodik = {
+    enable = true;
+    openFirewall = true;
+  };
+
+  # setup reverse proxy
+  services.nginx = {
+    enable = true;
+    virtualHosts."example.com" = {
+      locations."/".proxyPass = "http://127.0.0.1:8000";
+
+      # ssl stuff
+      enableACME = true;
+      forceSSL = true;
+    };
+  };
+
+  security.acme = {
+    defaults.email = "johnsmith@example.com";
+    acceptTerms = true;
+  };
+}
+```
+#### 2.3 Quick reference
+All available module options set to their defaults.
+```nix
+  services.dometodik = {
+    enable = true;  # enable the module
+    openFirewall = true;  # open ports in firewall
+    nixPackage = pkgs.nixVersions.nix_2_14;  # set nix version to use
+    user = "dometodik";  # the user to run the service as
+    group = "dometodik";  # the group to run the service as
+  };
+```
+
+For more details on Nix usage, refer to `flake.nix` (and other `.nix` files)
+as well as Nix documentation.
 
 
 
