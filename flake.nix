@@ -10,10 +10,13 @@
     
     packages = import ./packages.nix { inherit pkgs; };
     devShell = callPackage ./shell.nix { };
+    module = import ./module.nix;
     # devShell = import ./shell.nix { inherit pkgs; };
 
   in {
     packages.${system} = packages;
     devShells.${system}.default = devShell;
+    nixosModules."dometodik" = module;
+    nixosModules.default = module;
   };
 }
