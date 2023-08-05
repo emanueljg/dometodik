@@ -77,9 +77,9 @@ Note that you *need* a flake-enabled setup to use this repo.
 ### Ad-hoc package/app usage
 ```sh
 # Start on localhost port 8000 (gunicorn)
-nix run github:emanueljg/dometodik#run
-# or, equivalent:
 nix run github:emanueljg/dometodik
+# or, equivalent:
+nix run github:emanueljg/dometodik#run
 
 # start on localhost port 5000 (raw flask run)
 nix run github:emanueljg/dometodik#debug
@@ -108,7 +108,7 @@ Website is accessible on `http://127.0.0.1:8000`.
 
   services.dometodik = {
     enable = true;
-    openFirewall = true;  # opens port 80 and 443 in firewall
+    openFirewall = true; 
   ];
 }
 ```
@@ -147,8 +147,8 @@ All available module options set to their defaults.
 ```nix
   services.dometodik = {
     enable = true;  # enable the module
-    openFirewall = true;  # open ports in firewall
-    nixPackage = pkgs.nixVersions.nix_2_14;  # set nix version to use
+    openFirewall = true;  # open port 80 and 443 in firewall
+    nixPackage = pkgs.nixVersions.nix_2_14;  # set nix package to use
     user = "dometodik";  # the user to run the service as
     group = "dometodik";  # the group to run the service as
   };
