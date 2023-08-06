@@ -21,7 +21,7 @@ jobs:
       with:
         python-version: "3.11"
     - uses: Gr1N/setup-poetry@v8
-    - run: poetry config virtualenv.in-project = true
+    - run: poetry config virtualenvs.in-project = true
     - run: poetry install
 
     - uses: actions/cache@v2
