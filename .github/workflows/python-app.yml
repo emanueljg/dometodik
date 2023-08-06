@@ -23,8 +23,8 @@ jobs:
     - uses: Gr1N/setup-poetry@v8
     - run: poetry install --with dev
     - run: poetry run task lint
-    - run: task format
-    - run: task typecheck 
+    - run: poetry run task format
+    - run: poetry run task typecheck 
 
   test:
     runs-on: ubuntu-latest
@@ -36,5 +36,5 @@ jobs:
     - uses: Gr1N/setup-poetry@v8
     - run: poetry install --with dev
     - run: playwright install
-    - run: task debug &
-    - run: task test_norun
+    - run: poetry run task debug &
+    - run: poetry run task test_norun
