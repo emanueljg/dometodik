@@ -9,8 +9,7 @@ let
     sha256 = "sha256-NNxdrVRooAiqMWUwjer+gc2cGfx4buijhtPydPzg4gM=";
   }) { inherit system; }) playwright-driver;
 
-  poetryEnv = poetry2nix.mkPoetryEnv (import ./poetry.nix { inherit pkgs; });
+in ''
+  export PLAYWRIGHT_BROWSERS_PATH=${playwright-driver.browsers}
+''
 
-in poetryEnv.env.overrideAttrs (_: {
-  shellHook = import ./shellHook.nix { inherit pkgs; };
-})

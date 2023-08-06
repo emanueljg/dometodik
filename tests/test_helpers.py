@@ -3,7 +3,7 @@ from collections.abc import Iterable, Iterator
 
 import pytest
 
-from app.helpers import elems_with_attrs
+from dometodik.helpers import elems_with_attrs
 
 # many functions are self-explanatory, cba
 # ruff: noqa: D103
