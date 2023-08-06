@@ -43,8 +43,7 @@ CHECK = "task LINT && task FORMAT && task typecheck"
 
 debug = "flask --app dometodik run"
 
-test_norun = "pytest"
-test = "task debug & task test_norun"
+test = "pytest"
 
 precommit = "task check && task test"
 PRECOMMIT = "task CHECK && task TEST"
