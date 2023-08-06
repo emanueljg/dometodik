@@ -23,6 +23,7 @@ jobs:
     - uses: Gr1N/setup-poetry@v8
     - run: poetry install
     - run: poetry config virtualenvs.in-project true
+    - run: poetry shell
     - run: task lint
     - run: task format
     - run: task typecheck 
