@@ -46,11 +46,14 @@ should you need them.
 
   # start server in another window
   task debug
-  # run e2e tests (requires running server)
+
+  # Testing requires Playwright to be installed!
+  playwright install
+  # run e2e tests (requires running debug server)
   task test
 
   # run all checks + tests (lint + format + typecheck + test) 
-  # requires running server
+  # requires running debug server
   task PRECOMMIT
 ```
 
