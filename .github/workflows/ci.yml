@@ -37,4 +37,4 @@ jobs:
     - run: poetry install --with dev
     - run: poetry run playwright install
     - run: poetry run task debug &
-    - run: poetry run task test_norun
+    - run: poetry run task test
