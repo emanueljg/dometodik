@@ -27,7 +27,7 @@ task debug
 ```
 
 # Development
-*NOTE:*
+**NOTE:**
 - *UPPERCASE* tasks *actively edit* the code if any warnings/errors are automagically fixable.
 - *lowercase* tasks *only check* the code.
 
@@ -52,12 +52,6 @@ should you need them.
   # run all checks + tests (lint + format + typecheck + test) 
   # requires running server
   task PRECOMMIT
-```
-
-## usage
-```sh
-# open the website on 127.0.0.1:5000
-flask run
 ```
 
 ## Code explanation
@@ -100,15 +94,15 @@ Note that you *need* a flake-enabled setup to use this repo.
 
 ### Ad-hoc package/app usage
 ```sh
-# Start on localhost port 8000 (gunicorn)
-nix run github:emanueljg/dometodik
-# or, equivalent:
+# Equivalent to "task run"
 nix run github:emanueljg/dometodik#run
+# this is the default task, meaning we can omit #run here
+nix run github:emanueljg/dometodik
 
-# start on localhost port 5000 (raw flask run)
+# Equivalent to "task debug"
 nix run github:emanueljg/dometodik#debug
 
-# e2e tests
+# Equivalent to "task test"
 nix run github:emanueljg/dometodik#test
 ```
 
