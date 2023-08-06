@@ -21,8 +21,8 @@ jobs:
       with:
         python-version: "3.11"
     - uses: Gr1N/setup-poetry@v8
-    - run: poetry install
     - run: poetry config virtualenvs.create false
+    - run: poetry install
     - run: poetry run task lint
     - run: task format
     - run: task typecheck 
@@ -35,8 +35,8 @@ jobs:
       with:
         python-version: "3.11"
     - uses: Gr1N/setup-poetry@v8
-    - run: poetry install
     - run: poetry config virtualenvs.create false
+    - run: poetry install
     - run: playwright install
     - run: task debug &
     - run: task test_norun
