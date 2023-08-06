@@ -22,7 +22,7 @@ jobs:
         python-version: "3.11"
     - uses: Gr1N/setup-poetry@v8
     - run: poetry install --with dev
-    - run: task lint
+    - run: poetry run task lint
     - run: task format
     - run: task typecheck 
 
