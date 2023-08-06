@@ -22,10 +22,9 @@ jobs:
         python-version: "3.11"
     - uses: Gr1N/setup-poetry@v8
     - run: poetry install
-    - run: poetry shell
-    - run: task lint
-    - run: task format
-    - run: task typecheck 
+    - run: poetry run task lint
+    - run: poetry run task format
+    - run: poetry run task typecheck 
 
   test:
     runs-on: ubuntu-latest
@@ -36,7 +35,6 @@ jobs:
         python-version: "3.11"
     - uses: Gr1N/setup-poetry@v8
     - run: poetry install
-    - run: poetry shell
     - run: playwright install
-    - run: task debug &
-    - run: task test_norun
+    - run: poetry run task debug &
+    - run: poetry run task test_norun
