@@ -35,6 +35,6 @@ jobs:
         python-version: "3.11"
     - uses: Gr1N/setup-poetry@v8
     - run: poetry install --with dev
-    - run: playwright install
+    - run: poetry run playwright install
     - run: poetry run task debug &
     - run: poetry run task test_norun
