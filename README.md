@@ -1,33 +1,57 @@
-## requirements
+# Requirements
 * Python >= 3.11 
-* requirements specified in requirements.txt (installation follows below)
+* Python Poetry
 
-## setup using [venv](https://docs.python.org/3/library/venv.html) (unix)
+# Setup
+Install with [Poetry](https://python-poetry.org/docs/#installation).
+- Normal installation: `poetry install`
+- Include development packages (for running checks): `poetry install --with dev`
+
+After that, instead of prefixing every single command with `poetry run`, you can activate a
+virtual environment with `poetry shell`.
+
+Many project workflow commands is implemented with [Taskipy](https://github.com/taskipy/taskipy).
+Usage is intuitive; `pytest` -> `task test`, etc. 
+Abstracting away the command in question like this allows for implementations to change much more fluidly.
+Please refer to `task -l` for a list of available tasks.
+
+# Usage
 ```sh
-# make virtual environment
-python -m venv .venv
+# activate venv
+poetry shell
 
-# activate environment
-. .venv/bin/activate
-
-# past this point you should have a (.venv) prompt
-
-# install requirements (flask among others)
-pip install -r requirements.txt
-
-# To be able to run pytest's browser tests, you need to init Playwright
-playwright install
+# run webserver (gunicorn, probably what you want)
+task run
+# run webserver (raw flask runner)
+task debug
 ```
 
-## lint, format and test
-```sh
-./prepare.sh
-```
+# Development
+*NOTE:*
+- *UPPERCASE* tasks *actively edit* the code if any warnings/errors are automagically fixable.
+- *lowercase* tasks *only check* the code.
 
-## quick and dirty setup (not recommended)
-For the pragmatic people with no time to make a virtual environemt, you can of course just install the requirements system-wide:
+In the following reference, UPPERCASE tasks are used for checks, but note that non-altering alternatives exist
+should you need them.
 ```sh
-pip install -r requirements.txt
+  # activate venv
+  poetry shell
+  
+  # run task one by one
+  task LINT
+  task FORMAT
+  task TYPECHECK  
+  # run all tasks above (lint + format + typecheck) 
+  task CHECK
+
+  # start server in another window
+  task debug
+  # run e2e tests (requires running server)
+  task test
+
+  # run all checks + tests (lint + format + typecheck + test) 
+  # requires running server
+  task PRECOMMIT
 ```
 
 ## usage
