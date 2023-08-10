@@ -2,9 +2,11 @@
 
 let 
   poetry = import ./poetry.nix { inherit pkgs; };
-  main = poetry2nix.mkPoetryApplication poetry;
+  main = poetry2nix.mkPoetryApplication (
+    poetry // { checkGroups = [ ]; }
+  );
   dev = poetry2nix.mkPoetryApplication (
-    poetry // { groups = [ "dev" ]; }
+    poetry // { groups = [ "checks" ]; }
   );
 
   taskPackages = lib.genAttrs [ "run" "test" "debug" ] 
