@@ -66,7 +66,7 @@ in {
         script = with cfg.flake; let
           nix = "${cfg.nixPackage}/bin/nix";
           flake = "path:${path}#${outputAttr}";
-        in "${nix} run ${flake}";
+        in "${nix} run ${flake} --refresh";
         serviceConfig = {
           User = cfg.user;
           Group = cfg.group;
