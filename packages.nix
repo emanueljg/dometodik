@@ -6,7 +6,7 @@ let
     poetry // { checkGroups = [ ]; }
   );
   dev = poetry2nix.mkPoetryApplication (
-    poetry // { groups = [ "checks" ]; }
+    poetry // { groups = [ "dev" ]; }
   );
 
   taskPackages = lib.genAttrs [ "run" "test" "debug" ] 
