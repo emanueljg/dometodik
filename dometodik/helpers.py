@@ -3,13 +3,11 @@
 __all__ = ["elems_with_attrs", "base_render"]
 
 from collections.abc import Hashable, Iterable, Iterator, Mapping
-from datetime import date
 from typing import Any
 
 from flask import render_template
 
 from . import content
-from .calendar import Calendar
 
 
 def _obj_has_attrs(obj: Any, **attrs: Any) -> bool:  # noqa: ANN401
@@ -57,9 +55,7 @@ def elems_with_attrs(
 
 def base_render(
     route: str = "home",
-    *,
-    failed_login: bool = False,
-    calendar: Calendar | None = None,
+    **kwargs: Any,  # noqa: ANN401,
 ) -> str:
     """
     Render base HTML with custom Jinja variables.
@@ -79,7 +75,7 @@ def base_render(
             * Set the home.html as displayed
 
     :param route: The currently selected route, evaluates to `Content`
-    :param failed_login: Whether the last login attempt failed or not
+    :param kwargs: Arbitrary mappings of variables to use in templates.
 
     :return: The rendered HTML
     """
@@ -87,6 +83,5 @@ def base_render(
         "base.html",
         selected_content=content.Content.ALL[route],
         Content=content.Content,
-        failed_login=failed_login,
-        calendar=calendar or Calendar(date(year=1970, month=1, day=1)),
+        **kwargs,
     )
