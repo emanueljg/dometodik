@@ -17,7 +17,7 @@ Please refer to `task -l` for a list of available tasks.
 
 # Usage
 ```sh
-# activate venv
+# activate poetry shell
 poetry shell
 
 # run webserver (gunicorn, probably what you want)
@@ -34,7 +34,7 @@ task debug
 In the following reference, UPPERCASE tasks are used for checks, but note that non-altering alternatives exist
 should you need them.
 ```sh
-  # activate venv
+  # activate poetry shell
   poetry shell
   
   # run task one by one
