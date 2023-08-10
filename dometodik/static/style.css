@@ -249,6 +249,19 @@ body {
   display: none;
 }
 
+#members {
+  flex-direction: column;
+}
+
+#member-list {
+  margin-left: 30px;
+}
+
+.member {
+  margin-bottom: 50px;
+}
+
+
 @media (orientation: portrait) {
   .container {
     left: 30px;

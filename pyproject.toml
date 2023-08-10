@@ -38,15 +38,15 @@ FORMAT = "black ."
 
 typecheck = "mypy . --strict"
 
-check = "task lint && task format && task typecheck"
-CHECK = "task LINT && task FORMAT && task typecheck"
+check = "task format && task lint && task typecheck"
+CHECK = "task FORMAT && task LINT && task typecheck"
 
 debug = "flask --app dometodik run"
 
 test = "pytest"
 
 precommit = "task check && task test"
-PRECOMMIT = "task CHECK && task TEST"
+PRECOMMIT = "task CHECK && task test"
 
 # don't add more workers. Race conditions breaks the calendar
 # (and possibly other things)
