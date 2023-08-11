@@ -16,8 +16,8 @@ def _start_page(page: Page) -> None:
 
 
 def test_home_redirect(page: Page) -> None:
-    """Going to `/` should redirect to `/home`."""
-    expect(page).to_have_url(f"{BASE_URL}/home")
+    """Going to `/` should redirect to `/login`."""
+    expect(page).to_have_url(f"{BASE_URL}/login")
 
 
 BtnContentPair = tuple[Locator, Locator]
@@ -36,16 +36,16 @@ def _test_first_selected_second_not(
 def test_page_nav(page: Page) -> None:
     """Test clicking some content buttons and check content visbility toggle."""
     btns = page.locator("#contentButtons")
-    home_button = btns.locator("#homeButton")
+    login_button = btns.locator("#loginButton")
     members_button = btns.locator("#membersButton")
 
-    home_button_content_pair = home_button, page.locator("#home")
+    login_button_content_pair = login_button, page.locator("#login")
 
     members_button_content_pair = members_button, page.locator("#members")
 
-    pairs = home_button_content_pair, members_button_content_pair
+    pairs = login_button_content_pair, members_button_content_pair
 
-    # start off at home
+    # start off at login
     _test_first_selected_second_not(*pairs)
 
     # [::1] reverses an iterable.
@@ -56,6 +56,6 @@ def test_page_nav(page: Page) -> None:
     _test_first_selected_second_not(*pairs)
 
     # last flip
-    home_button.click()
+    login_button.click()
     pairs = pairs[::-1]
     _test_first_selected_second_not(*pairs)
