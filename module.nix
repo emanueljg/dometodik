@@ -65,7 +65,7 @@ in {
         environment.HOME = WorkingDirectory;
         script = with cfg.flake; let
           nix = "${cfg.nixPackage}/bin/nix";
-          flake = "path:${path}#${outputAttr}";
+          flake = "${path}#${outputAttr}";
         in "${nix} run ${flake} --refresh";
         serviceConfig = {
           User = cfg.user;
