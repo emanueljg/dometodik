@@ -9,7 +9,7 @@ in {
       type = submodule { options = {
         path = mkOption {
           type = either str path;
-          default = ./.;
+          default = "github:emanueljg/dometodik";
         };
         outputAttr = mkOption {
           type = str;
