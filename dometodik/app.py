@@ -46,22 +46,22 @@ Route = Callable[[T_route], T_route]
 
 @app.route("/")
 def base() -> Response:
-    """Redirect root route to /home."""
-    return redirect("/home")
+    """Redirect root route to /login."""
+    return redirect("/login")
 
 
 @app.route("/login", methods=("POST",))
 def login() -> Response | str:
     """Login a user."""
     if current_user.is_authenticated:
-        return redirect("/")
+        return redirect("/calendar")
 
     email = request.form.get("email")
     password = request.form.get("password")
     found_user = USERS.with_login(email, password)
     if found_user:
         login_user(found_user)
-        return redirect("/")
+        return redirect("/calendar")
     return base_render(route="login", failed_login=True, users=USERS, calendar=CAL)
 
 

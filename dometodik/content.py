@@ -86,6 +86,5 @@ class Content:
 # is automatically added to Content.ALL, just type them here
 Content("login")
 Content("logout", has_text=False, protected=True)
-Content("home")
 Content("members")
 Content("calendar", protected=True)
