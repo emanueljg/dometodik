@@ -62,7 +62,7 @@ filterwarnings = "ignore::pytest.PytestCacheWarning"
 select = [ "ALL" ]
 fix = true
 exclude = ['stubs']
-ignore = [ "D203", "D212", "S101"]
+ignore = [ "D203", "D212", "S101", "EXE002" ]
 
 [tool.mypy]
 strict = true
