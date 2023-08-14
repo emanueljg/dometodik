@@ -1,11 +1,68 @@
+[tool.poetry]
+name = "dometodik"
+version = "1.0.0"
+description = ""
+authors = [
+  "Emanuel Johnson Godin <emanueljohnsongodin@gmail.com>"
+]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+flask = "2.3.2"
+Flask-Login = "0.6.2"
+gunicorn = "^20.1.0"
+taskipy = "^1.11.0"
+
+[tool.poetry.group.dev]
+optional = true
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.3.0"
+playwright = "1.34.0"
+pytest-playwright = "^0.3.3"
+pytest = "^7.3.1"
+black = "^23.1.0"
+ruff = "^0.0.270"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+ # tasks
+[tool.taskipy.tasks]
+lint = "ruff . --no-fix"
+LINT = "ruff . --fix"
+
+format = "black . --check"
+FORMAT = "black ."
+
+typecheck = "mypy . --strict"
+
+check = "task format && task lint && task typecheck"
+CHECK = "task FORMAT && task LINT && task typecheck"
+
+debug = "flask --app dometodik run"
+
+test = "pytest"
+
+precommit = "task check && task test"
+PRECOMMIT = "task CHECK && task test"
+
+# don't add more workers. Race conditions breaks the calendar
+# (and possibly other things)
+run = "gunicorn dometodik:app"
+
+# test misc
+
 [tool.pytest.ini_options]
 pythonpath = [ "." ]
+filterwarnings = "ignore::pytest.PytestCacheWarning"
 
 [tool.ruff]
 select = [ "ALL" ]
 fix = true
 exclude = ['stubs']
-ignore = [ "D203", "D212", "S101"]
+ignore = [ "D203", "D212", "S101", "EXE002" ]
 
 [tool.mypy]
 strict = true

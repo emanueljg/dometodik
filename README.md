@@ -1,39 +1,60 @@
-## requirements
+# Requirements
 * Python >= 3.11 
-* requirements specified in requirements.txt (installation follows below)
+* Python Poetry
 
-## setup using [venv](https://docs.python.org/3/library/venv.html) (unix)
+# Setup
+Install with [Poetry](https://python-poetry.org/docs/#installation).
+- Normal installation: `poetry install`
+- Include development packages (for running checks): `poetry install --with dev`
+
+After that, instead of prefixing every single command with `poetry run`, you can activate a
+virtual environment with `poetry shell`.
+
+Many project workflow commands is implemented with [Taskipy](https://github.com/taskipy/taskipy).
+Usage is intuitive; `pytest` -> `task test`, etc. 
+Abstracting away the command in question like this allows for implementations to change much more fluidly.
+Please refer to `task -l` for a list of available tasks.
+
+# Usage
 ```sh
-# make virtual environment
-python -m venv .venv
+# activate poetry shell
+poetry shell
 
-# activate environment
-. .venv/bin/activate
-
-# past this point you should have a (.venv) prompt
-
-# install requirements (flask among others)
-pip install -r requirements.txt
-
-# To be able to run pytest's browser tests, you need to init Playwright
-playwright install
+# run webserver (gunicorn, probably what you want)
+task run
+# run webserver (raw flask runner)
+task debug
 ```
 
-## lint, format and test
-```sh
-./prepare.sh
-```
+# Development
+**NOTE:**
+- *UPPERCASE* tasks *actively edit* the code if any warnings/errors are automagically fixable.
+- *lowercase* tasks *only check* the code.
 
-## quick and dirty setup (not recommended)
-For the pragmatic people with no time to make a virtual environemt, you can of course just install the requirements system-wide:
+In the following reference, UPPERCASE tasks are used for checks, but note that non-altering alternatives exist
+should you need them.
 ```sh
-pip install -r requirements.txt
-```
+  # activate poetry shell
+  poetry shell
+  
+  # run task one by one
+  task LINT
+  task FORMAT
+  task TYPECHECK  
+  # run all tasks above (lint + format + typecheck) 
+  task CHECK
 
-## usage
-```sh
-# open the website on 127.0.0.1:5000
-flask run
+  # start server in another window
+  task debug
+
+  # Testing requires Playwright to be installed!
+  playwright install
+  # run e2e tests (requires running debug server)
+  task test
+
+  # run all checks + tests (lint + format + typecheck + test) 
+  # requires running debug server
+  task PRECOMMIT
 ```
 
 ## Code explanation
@@ -65,6 +86,99 @@ tests is an antifeature.
 
 Also - this code has strict checks and if you don't check the code you commit it's not going to pass. Run the tests
 locally before making a PR. 
+
+
+## Nix usage
+This repository supports nix usage through `flake.nix`, which contains two parts:
+  - Runnable package(s)
+  - NixOS module (useful for e.g. dedicated web servers running NixOS) 
+
+Note that you *need* a flake-enabled setup to use this repo.
+
+### Ad-hoc package/app usage
+```sh
+# Equivalent to "task run"
+nix run github:emanueljg/dometodik#run
+# this is the default task, meaning we can omit #run here
+nix run github:emanueljg/dometodik
+
+# Equivalent to "task debug"
+nix run github:emanueljg/dometodik#debug
+
+# Equivalent to "task test"
+nix run github:emanueljg/dometodik#test
+```
+
+### Module
+
+#### Add to flake inputs
+```nix
+inputs.dometodik = {
+  url = "github:emanueljg/dometodik";
+  # useful to avoid unnecessary build time
+  #inputs.nixpkgs.follows = "nixpkgs"; 
+};
+```
+#### Module quickstart
+This adds a very simple systemd service that starts the webserver on boot.
+Website is accessible on `http://127.0.0.1:8000`.
+```nix
+{ dometodik, ... }: {
+
+  imports = [ dometodik.nixosModules.default ];
+
+  services.dometodik = {
+    enable = true;
+    openFirewall = true; 
+  ];
+}
+```
+
+#### Example configuration
+```nix
+{ dometodik, ... }: {
+
+  imports = [ dometodik.nixosModules.default ];
+
+  services.dometodik = {
+    enable = true;
+    openFirewall = true;
+  };
+
+  # setup reverse proxy
+  services.nginx = {
+    enable = true;
+    virtualHosts."example.com" = {
+      locations."/".proxyPass = "http://127.0.0.1:8000";
+
+      # ssl stuff
+      enableACME = true;
+      forceSSL = true;
+    };
+  };
+
+  security.acme = {
+    defaults.email = "johnsmith@example.com";
+    acceptTerms = true;
+  };
+}
+```
+#### Quick reference
+All available module options set to their defaults.
+```nix
+  services.dometodik = {
+    enable = true;  # enable the module
+    openFirewall = true;  # open port 80 and 443 in firewall
+    nixPackage = pkgs.nixVersions.nix_2_14;  # set nix package to use
+    user = "dometodik";  # the user to run the service as
+    group = "dometodik";  # the group to run the service as
+  };
+```
+
+For more details on Nix usage, refer to `flake.nix` (and other `.nix` files)
+as well as Nix documentation.
+
+
 
 
 

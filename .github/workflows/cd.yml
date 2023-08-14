@@ -1,0 +1,28 @@
+name: Deploy
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [master]
+
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: wait for the merge to get to the server 
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '10s'
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          # lumia is a self-defined systemd service 
+          # see https://git.emanueljg.com/ejg/nixos/src/branch/master/hosts/fenix/lumia.nix
+          script: |
+            sudo systemctl restart dometodik

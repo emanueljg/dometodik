@@ -1,0 +1,30 @@
+[
+  { "firstname": "John",
+    "lastname": "Smith",
+    "role": "Test User",
+    "email": "foo",
+    "password": "bar"
+  },
+  {
+    "firstname": "Emanuel",
+    "lastname": "Johnson Godin",
+    "role": "Programmer",
+    "email": "emanueljohnsongodin@gmail.com",
+    "password": "pass1"
+  },
+  {
+    "firstname": "Vanisha",
+    "lastname": "Shah",
+    "role": "Tester",
+    "email": "example@example.com",
+    "password": "pass2"
+  },
+  {
+    "firstname": "Hanway",
+    "lastname": "Tran",
+    "role": "Sysadmin",
+    "email": "example@example.com",
+    "password": "pass3"
+  }
+]
+    

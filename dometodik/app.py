@@ -5,14 +5,19 @@ from datetime import date, datetime, timezone
 
 from flask import Flask, redirect, request
 from flask.scaffold import T_route
-from flask_login import current_user, login_required, login_user, logout_user
+from flask_login import (
+    LoginManager,
+    current_user,
+    login_required,
+    login_user,
+    logout_user,
+)
 from werkzeug.wrappers.response import Response
 
-from .auth import init_flask_login
 from .calendar import Calendar, Todo
 from .content import Content  # pylint: disable=cyclic-import
 from .helpers import base_render
-from .user import User
+from .user import User, Users
 
 app = Flask(__name__)
 app.jinja_options = {
@@ -21,35 +26,43 @@ app.jinja_options = {
 }
 app.secret_key = "not very secret..."  # noqa: S105
 
+d1 = datetime.now(tz=timezone.utc).date()
+CAL = Calendar(d1)
 
-init_flask_login(app)
+USERS = Users().load()
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+
+@login_manager.user_loader
+def load_user(user_id: str) -> User:
+    """Load a user from the USERS object."""
+    return USERS[int(user_id)]
+
 
 Route = Callable[[T_route], T_route]
 
 
-d1 = datetime.now(tz=timezone.utc).date()
-CAL = Calendar(d1)
-
-
 @app.route("/")
 def base() -> Response:
-    """Redirect root route to /home."""
-    return redirect("/home")
+    """Redirect root route to /login."""
+    return redirect("/login")
 
 
 @app.route("/login", methods=("POST",))
 def login() -> Response | str:
     """Login a user."""
     if current_user.is_authenticated:
-        return redirect("/")
+        return redirect("/calendar")
 
     email = request.form.get("email")
     password = request.form.get("password")
-    found_user = User.with_login(email, password)
+    found_user = USERS.with_login(email, password)
     if found_user:
-        login_user(User.USERS[found_user.id])
-        return redirect("/")
-    return base_render(route="login", failed_login=True)
+        login_user(found_user)
+        return redirect("/calendar")
+    return base_render(route="login", failed_login=True, users=USERS, calendar=CAL)
 
 
 @app.route("/logout", methods=("GET",))
@@ -120,4 +133,8 @@ def setup_calendar() -> Response:
 @app.route(f'/<any({", ".join(Content.with_text())}):content>')
 def content_route(content: str) -> str:
     """Return a base html with the routed conted active."""
-    return base_render(route=content, calendar=CAL)
+    return base_render(route=content, calendar=CAL, users=USERS)
+
+
+if __name__ == "__main__":
+    app.run(host="127.0.0.1", port=3000, debug=True)

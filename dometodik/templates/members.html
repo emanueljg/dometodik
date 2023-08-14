@@ -1,0 +1,9 @@
+<h3>Members</h3>
+<div id="member-list">
+  {% for user in users.values() %}
+    <div class="member">
+      <h4 class="member-name">{{user.firstname}} {{user.lastname}}, <i>{{user.role}}</i></h4>
+      <p class="member-email">{{user.email}}</p>
+    </div>
+  {% endfor %}
+</div>

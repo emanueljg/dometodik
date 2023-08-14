@@ -6,8 +6,17 @@
   outputs = { self, nixpkgs }: let 
     system = "x86_64-linux";
     pkgs = import nixpkgs { inherit system; };
-    devShell = import ./shell.nix { inherit pkgs; };
+    inherit (pkgs) callPackage;
+    
+    packages = import ./packages.nix { inherit pkgs; };
+    devShell = callPackage ./shell.nix { };
+    module = import ./module.nix;
+    # devShell = import ./shell.nix { inherit pkgs; };
+
   in {
+    packages.${system} = packages;
     devShells.${system}.default = devShell;
+    nixosModules."dometodik" = module;
+    nixosModules.default = module;
   };
 }

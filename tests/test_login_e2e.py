@@ -65,8 +65,8 @@ def test_good_login(page: Page) -> None:
     # login
     _do_login(page, "foo", "bar", do_goto=True)
 
-    # should be back to home
-    expect(page).to_have_url(f"{BASE_URL}/home")
+    # should be at calendar now
+    expect(page).to_have_url(f"{BASE_URL}/calendar")
 
     # logout
     resp = goto(page, "logout")
